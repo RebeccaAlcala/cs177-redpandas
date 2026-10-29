@@ -6,11 +6,11 @@
 **Story map:** Connect workspace (calendar, Slack, Docs) via company SSO; tag each team.
 
 ## Phase 0: Wed night (everyone is waiting on this)
-- [ ] `npx create-next-app` (TypeScript, Tailwind, App Router). Push to `main`.
-- [ ] Create `lib/types.ts` exactly as in `docs/CONTRACT.md`
-- [ ] Create `lib/data.ts` with all functions from the contract, reading `data/seed/*.json`
-- [ ] Create a **stub fixture** in `data/seed/` with one of every type (so others can build immediately). Tell #6 so they extend it instead of replacing the shape.
-- [ ] Push empty placeholder pages for all routes in the contract so nav links don't 404
+- [x] `npx create-next-app` (TypeScript, Tailwind, App Router). Push to `main`.
+- [x] Create `lib/types.ts` exactly as in `docs/CONTRACT.md`
+- [x] Create `lib/data.ts` with all functions from the contract, reading `data/seed/*.json`
+- [x] Create a **stub fixture** in `data/seed/` with one of every type (so others can build immediately). Tell #6 so they extend it instead of replacing the shape.
+- [x] Push empty placeholder pages for all routes in the contract so nav links don't 404
 - [ ] Post in team chat: "scaffold is up, pull main"
 
 ## Phase 1: Thu
