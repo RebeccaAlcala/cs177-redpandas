@@ -1,0 +1,11 @@
+[
+  {
+    "id": "m_001",
+    "title": "Data export scoping sync",
+    "date": "2026-10-14T17:00:00.000Z",
+    "durationMin": 30,
+    "featureId": "f_data_export",
+    "attendeeIds": ["p_maya", "p_sana", "p_leo"],
+    "recordingStatus": "recorded"
+  }
+]

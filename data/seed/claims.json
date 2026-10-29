@@ -1,0 +1,21 @@
+[
+  {
+    "id": "c_001",
+    "text": "\"Customer data\" must include derived and analytics data for the export.",
+    "kind": "statement",
+    "featureId": "f_data_export",
+    "meetingId": "m_001",
+    "team": "compliance",
+    "sourceIds": ["src_001", "src_002"]
+  },
+  {
+    "id": "c_002",
+    "text": "The export only needs to cover profile data, so Eng can ship it this sprint.",
+    "kind": "statement",
+    "featureId": "f_data_export",
+    "meetingId": "m_001",
+    "team": "product",
+    "sourceIds": [],
+    "contradictsSourceId": "src_003"
+  }
+]

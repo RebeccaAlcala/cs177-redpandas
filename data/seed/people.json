@@ -1,0 +1,5 @@
+[
+  { "id": "p_maya", "name": "Maya Chen", "role": "Product Manager", "team": "product" },
+  { "id": "p_sana", "name": "Sana Okoye", "role": "Compliance Lead", "team": "compliance" },
+  { "id": "p_leo", "name": "Leo Park", "role": "Staff Engineer", "team": "eng" }
+]

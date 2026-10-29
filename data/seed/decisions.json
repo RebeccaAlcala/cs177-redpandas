@@ -1,0 +1,13 @@
+[
+  {
+    "id": "d_001",
+    "featureId": "f_data_export",
+    "text": "Export scope will follow the Compliance definition: include derived and analytics data.",
+    "date": "2026-10-14T17:28:00.000Z",
+    "madeByTeams": ["product", "compliance"],
+    "claimId": "c_001",
+    "sourceIds": ["src_001"],
+    "whyMeetingId": "m_001",
+    "whySegmentIds": ["m_001_s001", "m_001_s002"]
+  }
+]

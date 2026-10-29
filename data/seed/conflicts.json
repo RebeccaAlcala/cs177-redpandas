@@ -1,0 +1,17 @@
+[
+  {
+    "id": "x_001",
+    "featureId": "f_data_export",
+    "title": "Product and Compliance define \"customer data\" differently",
+    "teamA": "product",
+    "teamB": "compliance",
+    "claimAId": "c_002",
+    "claimBId": "c_001",
+    "explanation": "Product scopes the export to profile data only; Compliance requires derived and analytics data. The Eng estimate depends on which definition wins.",
+    "confidence": 0.82,
+    "suggestedQuestions": [
+      "Does \"customer data\" in the export include derived analytics?",
+      "What is the Eng estimate under each definition?"
+    ]
+  }
+]

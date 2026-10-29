@@ -1,0 +1,38 @@
+[
+  {
+    "id": "src_001",
+    "type": "meeting",
+    "title": "Data export scoping sync, Oct 14",
+    "url": "#/meetings/m_001?t=42",
+    "excerpt": "For Compliance, \"customer data\" has to include derived and analytics data, not just the profile fields.",
+    "meetingId": "m_001",
+    "segmentId": "m_001_s001",
+    "timestampSec": 42,
+    "authorId": "p_sana",
+    "team": "compliance",
+    "date": "2026-10-14T17:00:42.000Z",
+    "status": "current"
+  },
+  {
+    "id": "src_002",
+    "type": "slack",
+    "title": "#data-export thread",
+    "url": "https://slack.example.com/archives/data-export/p1760460000",
+    "excerpt": "Keeping the first export to profile data only so we can ship this sprint.",
+    "authorId": "p_maya",
+    "team": "product",
+    "date": "2026-10-14T18:20:00.000Z",
+    "status": "current"
+  },
+  {
+    "id": "src_003",
+    "type": "doc",
+    "title": "Privacy Policy v3",
+    "url": "https://docs.example.com/privacy-policy-v3",
+    "excerpt": "\"Customer data\" covers all data we hold about a customer, including derived analytics.",
+    "team": "compliance",
+    "date": "2026-09-01T00:00:00.000Z",
+    "version": "v3",
+    "status": "current"
+  }
+]

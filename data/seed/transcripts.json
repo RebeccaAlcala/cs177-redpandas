@@ -1,0 +1,18 @@
+[
+  {
+    "id": "m_001_s001",
+    "meetingId": "m_001",
+    "speakerId": "p_sana",
+    "team": "compliance",
+    "startSec": 42,
+    "text": "For Compliance, \"customer data\" has to include derived and analytics data, not just the profile fields."
+  },
+  {
+    "id": "m_001_s002",
+    "meetingId": "m_001",
+    "speakerId": "p_maya",
+    "team": "product",
+    "startSec": 95,
+    "text": "From the Product side I've been scoping \"customer data\" as profile data only, so the export stays small."
+  }
+]
