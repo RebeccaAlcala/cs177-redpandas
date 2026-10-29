@@ -14,12 +14,12 @@
 - [ ] Post in team chat: "scaffold is up, pull main"
 
 ## Phase 1: Thu
-- [ ] Shared UI: `TeamTag`, `Card`, `PageHeader`, `EmptyState`, plus a simple Button (push by Thursday morning)
-- [ ] App shell in `layout.tsx`: sidebar/top nav (Meetings, Features, Decisions, Conflicts), consistent page width and typography
-- [ ] Team colors defined once (compliance, risk, security, eng, growth, product)
-- [ ] `/` landing page: product name, one-line pitch, **"Sign in with company SSO"** button (mock; goes to `/connect`)
-- [ ] `/connect`: toggle cards for Google Calendar, Slack, Google Docs (fake "Connected" state); a channels/folders checklist; **team tagging** (assign each channel/folder to Compliance/Risk/Security/Eng/Growth). Save in `localStorage` only.
-- [ ] After connecting, a "Go to meetings" button
+- [x] Shared UI: `TeamTag`, `Card`, `PageHeader`, `EmptyState`, plus a simple Button (push by Thursday morning)
+- [x] App shell in `layout.tsx`: sidebar/top nav (Meetings, Features, Decisions, Conflicts), consistent page width and typography
+- [x] Team colors defined once (compliance, risk, security, eng, growth, product)
+- [x] `/` landing page: product name, one-line pitch, **"Sign in with company SSO"** button (mock; goes to `/connect`)
+- [x] `/connect`: toggle cards for Google Calendar, Slack, Google Docs (fake "Connected" state); a channels/folders checklist; **team tagging** (assign each channel/folder to Compliance/Risk/Security/Eng/Growth). Save in `localStorage` only.
+- [x] After connecting, a "Go to meetings" button
 
 ## Phase 2: Fri/Sat
 - [ ] Deploy to Vercel; share the link in the chat
