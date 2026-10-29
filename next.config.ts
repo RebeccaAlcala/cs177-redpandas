@@ -1,6 +1,9 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
+  // Next 16 auto-generates an AGENTS.md on dev/build; this repo uses CLAUDE.md
+  // for AI-tool instructions, so disable it.
+  agentRules: false,
   turbopack: {
     rules: {
       "*.css": {
