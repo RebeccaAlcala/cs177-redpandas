@@ -16,7 +16,17 @@ export interface ContradictionInfo {
   version?: string;
 }
 
+// Another source on the same topic as the ones being viewed.
+export interface RelatedSource {
+  id: string;
+  type: Source["type"];
+  title: string;
+  date: string;
+  reason: string; // "Backs the same claim", "Conflicts with this", "Same feature"
+}
+
 export interface SourcesPayload {
   sources: ResolvedSource[];
   contradicts?: ContradictionInfo;
+  related?: RelatedSource[];
 }

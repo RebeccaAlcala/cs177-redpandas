@@ -35,7 +35,7 @@
 - Panel/badge load data from `GET /trace/api?ids=...`, so they work from server or client components.
 
 ## Nice to have
-- [ ] "Related context": other sources on the same topic listed under the main source
+- [x] "Related context": other sources on the same topic listed under the main source
 
 ## Done when
 - From any summary point, one click shows the exact source text, who said it, which team, and how fresh it is

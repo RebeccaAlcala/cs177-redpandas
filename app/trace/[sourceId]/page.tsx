@@ -3,7 +3,8 @@ import { Card } from "@/components/ui/Card";
 import { EmptyState } from "@/components/ui/EmptyState";
 import { PageHeader } from "@/components/ui/PageHeader";
 import { SourceCard } from "@/components/source/SourceCard";
-import { resolveContradiction, resolveSources } from "@/components/source/resolve";
+import { RelatedSources } from "@/components/source/RelatedSources";
+import { resolveContradiction, resolveRelated, resolveSources } from "@/components/source/resolve";
 import { getClaims } from "@/lib/data";
 
 // /trace/[sourceId] — full-page version of the source panel. Fallback link
@@ -73,6 +74,8 @@ export default async function TracePage({
             </ul>
           )}
         </Card>
+
+        <RelatedSources related={resolveRelated([sourceId])} />
 
         {conflicting.length > 0 ? (
           <Card title="Claims that conflict with this source">

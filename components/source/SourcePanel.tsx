@@ -4,6 +4,7 @@ import Link from "next/link";
 import { useEffect, useRef, useState, useSyncExternalStore } from "react";
 import { createPortal } from "react-dom";
 import { EmptyState } from "@/components/ui/EmptyState";
+import { RelatedSources } from "./RelatedSources";
 import { SourceCard } from "./SourceCard";
 import { useSources } from "./useSources";
 
@@ -122,6 +123,8 @@ export function SourcePanel({
           ) : (
             sources.map((item) => <SourceCard key={item.source.id} item={item} onNavigate={onClose} />)
           )}
+
+          {data?.related?.length ? <RelatedSources related={data.related} onNavigate={onClose} /> : null}
         </div>
       </aside>
     </div>,

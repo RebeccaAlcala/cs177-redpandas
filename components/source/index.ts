@@ -4,3 +4,4 @@ export { SourcePanel } from "./SourcePanel";
 export { UnsourcedFlag } from "./UnsourcedFlag";
 export { FreshnessTag } from "./FreshnessTag";
 export { SourceCard } from "./SourceCard";
+export { RelatedSources } from "./RelatedSources";

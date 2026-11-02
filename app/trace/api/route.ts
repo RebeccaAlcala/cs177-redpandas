@@ -1,5 +1,5 @@
 import { NextResponse } from "next/server";
-import { resolveContradiction, resolveSources } from "@/components/source/resolve";
+import { resolveContradiction, resolveRelated, resolveSources } from "@/components/source/resolve";
 import type { SourcesPayload } from "@/components/source/types";
 
 // GET /trace/api?ids=src_001,src_002&contradicts=src_003
@@ -13,6 +13,7 @@ export function GET(request: Request) {
   const payload: SourcesPayload = {
     sources: resolveSources(ids),
     contradicts: resolveContradiction(params.get("contradicts") ?? undefined),
+    related: resolveRelated(ids),
   };
   return NextResponse.json(payload);
 }
