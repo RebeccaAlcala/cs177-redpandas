@@ -1,0 +1,37 @@
+{
+  "meetingId": "m_001",
+  "summaryPoints": [
+    {
+      "text": "Compliance wants the export to include derived and analytics data, not just profile fields.",
+      "claimId": "c_001",
+      "sourceIds": [
+        "src_001",
+        "src_002"
+      ]
+    },
+    {
+      "text": "Product has been scoping the export to profile data only so it ships this sprint.",
+      "claimId": "c_002",
+      "sourceIds": []
+    }
+  ],
+  "actionItems": [
+    {
+      "id": "ai_m_001_01",
+      "meetingId": "m_001",
+      "text": "Confirm whether the export must include derived analytics before estimating.",
+      "ownerId": "p_leo",
+      "team": "eng"
+    }
+  ],
+  "confusions": [
+    {
+      "text": "Compliance and Product use \"customer data\" to mean different things.",
+      "term": "customer data",
+      "segmentId": "m_001_s001"
+    }
+  ],
+  "conflictIds": [
+    "x_001"
+  ]
+}
