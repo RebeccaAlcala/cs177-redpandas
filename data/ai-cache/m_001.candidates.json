@@ -1,0 +1,35 @@
+{
+  "meetingId": "m_001",
+  "model": "claude-sonnet-5-5",
+  "generatedAt": "2026-11-02T23:22:15.714Z",
+  "unmatchedPoints": [
+    {
+      "text": "Product and Compliance gave different definitions of \"customer data\" and no agreement is recorded, which leaves the export scope open.",
+      "claimId": null,
+      "segmentIds": [
+        "m_001_s001",
+        "m_001_s002"
+      ]
+    }
+  ],
+  "conflictCandidates": [],
+  "unsourcedClaims": [
+    {
+      "text": "Eng can ship a profile-data-only export this sprint.",
+      "team": "product",
+      "kind": "commitment",
+      "segmentIds": [
+        "m_001_s002"
+      ],
+      "reason": "Only Product's own Slack note supports this. The transcript only mentions keeping the export small, and no Eng attendee confirmed the timeline."
+    }
+  ],
+  "docContradictions": [
+    {
+      "claimId": "c_002",
+      "claimText": "The export only needs to cover profile data, so Eng can ship it this sprint.",
+      "sourceId": "src_003",
+      "explanation": "Privacy Policy v3 says \"Customer data\" covers all data held about a customer, including derived analytics, so a profile-only export conflicts with it."
+    }
+  ]
+}
