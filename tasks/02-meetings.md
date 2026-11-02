@@ -13,13 +13,13 @@
 ## Phase 2: Sat
 - [ ] Replace placeholder chips with `<SourceBadge sourceIds=... />` from #5
 - [x] Show conflict callouts inside the summary (use `conflictIds`, link to `/conflicts`)
-- [ ] Highlight confusion/term annotations (e.g. "what Compliance means by 'customer data'") inline in the transcript if time allows
+- [x] Highlight confusion/term annotations (e.g. "what Compliance means by 'customer data'") inline in the transcript if time allows
 
 ## Phase 3: Sun
 - [x] Empty/loading states, long transcript scrolling, mobile-ish layout check
 
 ## Nice to have (only if ahead)
-- [ ] Transcript search box and filter by team
+- [x] Transcript search box and filter by team
 
 ## Done when
 - A meeting page shows a readable team-tagged transcript and the AI summary side by side

@@ -92,7 +92,11 @@ export default async function MeetingDetailPage({
             </span>
           </div>
           <div className="max-h-[70vh] overflow-y-auto overscroll-contain p-2 lg:max-h-[calc(100vh-16rem)]">
-            <TranscriptViewer meetingId={meeting.id} highlightSegmentId={segment} />
+            <TranscriptViewer
+              meetingId={meeting.id}
+              highlightSegmentId={segment}
+              showControls
+            />
           </div>
         </section>
 
