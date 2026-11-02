@@ -91,7 +91,7 @@ export default async function MeetingDetailPage({
               {segmentCount} line{segmentCount === 1 ? "" : "s"}
             </span>
           </div>
-          <div className="max-h-[calc(100vh-16rem)] overflow-y-auto p-2">
+          <div className="max-h-[70vh] overflow-y-auto overscroll-contain p-2 lg:max-h-[calc(100vh-16rem)]">
             <TranscriptViewer meetingId={meeting.id} highlightSegmentId={segment} />
           </div>
         </section>

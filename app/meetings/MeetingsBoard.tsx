@@ -96,7 +96,7 @@ export function MeetingsBoard({
     <div className="space-y-8">
       {/* Auto-join from calendar (mock) */}
       <Card>
-        <div className="mb-4 flex items-start justify-between gap-4">
+        <div className="mb-4 flex flex-wrap items-start justify-between gap-x-4 gap-y-2">
           <div>
             <h2 className="text-sm font-semibold text-gray-900">
               Recorder bot · auto-join from Google Calendar
@@ -118,8 +118,8 @@ export function MeetingsBoard({
               const status = statusOf(m);
               const auto = autoJoinOf(m);
               return (
-                <li key={m.id} className="flex flex-wrap items-center gap-4 py-3">
-                  <div className="min-w-0 flex-1">
+                <li key={m.id} className="flex flex-wrap items-center gap-x-4 gap-y-2 py-3">
+                  <div className="min-w-0 basis-full sm:basis-auto sm:flex-1">
                     <div className="truncate text-sm font-medium text-gray-900">{m.title}</div>
                     <div className="text-xs text-gray-500">{formatMeetingDate(m.date)}</div>
                   </div>
@@ -145,7 +145,7 @@ export function MeetingsBoard({
 
                   <RecordingBadge status={status} />
 
-                  <div className="w-36 text-right">
+                  <div className="ml-auto w-36 text-right">
                     {status === "scheduled" ? (
                       <button
                         type="button"
@@ -180,7 +180,7 @@ export function MeetingsBoard({
 
       {/* All meetings */}
       <section>
-        <div className="mb-3 flex items-center justify-between gap-4">
+        <div className="mb-3 flex flex-wrap items-center justify-between gap-x-4 gap-y-2">
           <h2 className="text-sm font-semibold text-gray-900">All meetings</h2>
           <label className="flex items-center gap-2 text-sm text-gray-600">
             Feature
@@ -209,8 +209,11 @@ export function MeetingsBoard({
                 .map((id) => peopleById.get(id))
                 .filter((p): p is Person => Boolean(p));
               return (
-                <li key={m.id} className="flex flex-wrap items-center gap-4 px-5 py-4">
-                  <div className="min-w-0 flex-1">
+                <li
+                  key={m.id}
+                  className="flex flex-wrap items-center gap-x-4 gap-y-3 px-4 py-4 sm:px-5"
+                >
+                  <div className="min-w-0 basis-full sm:basis-auto sm:flex-1">
                     <Link
                       href={`/meetings/${m.id}`}
                       className="text-sm font-semibold text-gray-900 hover:underline"
@@ -242,7 +245,7 @@ export function MeetingsBoard({
                     aria-label={`Link ${m.title} to a feature`}
                     value={fid}
                     onChange={(e) => setFeature(m.id, e.target.value)}
-                    className="w-44 rounded-md border border-gray-300 bg-white px-2 py-1 text-xs text-gray-700"
+                    className="ml-auto w-40 rounded-md border border-gray-300 bg-white px-2 py-1 text-xs text-gray-700 sm:ml-0 sm:w-44"
                   >
                     <option value="">Link to feature…</option>
                     {features.map((f) => (

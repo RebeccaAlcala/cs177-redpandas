@@ -61,7 +61,7 @@ export function TranscriptViewer({
                     {formatTimestamp(seg.startSec)}
                   </span>
                 </div>
-                <p className="mt-1 text-sm leading-relaxed text-gray-800">
+                <p className="mt-1 break-words text-sm leading-relaxed text-gray-800">
                   {seg.text}
                 </p>
               </div>

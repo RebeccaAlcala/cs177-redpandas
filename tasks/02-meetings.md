@@ -16,7 +16,7 @@
 - [ ] Highlight confusion/term annotations (e.g. "what Compliance means by 'customer data'") inline in the transcript if time allows
 
 ## Phase 3: Sun
-- [ ] Empty/loading states, long transcript scrolling, mobile-ish layout check
+- [x] Empty/loading states, long transcript scrolling, mobile-ish layout check
 
 ## Nice to have (only if ahead)
 - [ ] Transcript search box and filter by team
