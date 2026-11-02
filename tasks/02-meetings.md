@@ -4,15 +4,15 @@
 **Story map:** Record meeting (auto-join, linked to a feature), speaker-labeled transcript with team tags.
 
 ## Phase 1: Thu/Fri (build on stub data)
-- [ ] `/meetings` list: title, date, duration, linked feature, recording status badge (recorded / recording / scheduled), attendee avatars. Filter by feature.
-- [ ] "Auto-join from calendar" mock: a banner or card showing upcoming meetings the bot "will auto-join", with a toggle per meeting and a **Start/Stop recording** button that just flips status in local state. Also a **"Link to feature"** dropdown on each meeting.
-- [ ] `components/transcript/TranscriptViewer`: speaker-labeled lines, each with avatar, name, `TeamTag`, timestamp (mm:ss). Props: `meetingId`, `highlightSegmentId?` (scrolls to and highlights that line; #5 and #6 will use this to jump to a source moment).
-- [ ] `/meetings/[id]`: header (title, date, feature), transcript on the left, **AI summary panel on the right** (reads `getMeetingSummary`; shows summary points, action items, confusion notes). Use a placeholder chip where `<SourceBadge>` will go.
-- [ ] Support a URL param like `?segment=m_001_s014` so links can jump straight to a moment
+- [x] `/meetings` list: title, date, duration, linked feature, recording status badge (recorded / recording / scheduled), attendee avatars. Filter by feature.
+- [x] "Auto-join from calendar" mock: a banner or card showing upcoming meetings the bot "will auto-join", with a toggle per meeting and a **Start/Stop recording** button that just flips status in local state. Also a **"Link to feature"** dropdown on each meeting.
+- [x] `components/transcript/TranscriptViewer`: speaker-labeled lines, each with avatar, name, `TeamTag`, timestamp (mm:ss). Props: `meetingId`, `highlightSegmentId?` (scrolls to and highlights that line; #5 and #6 will use this to jump to a source moment).
+- [x] `/meetings/[id]`: header (title, date, feature), transcript on the left, **AI summary panel on the right** (reads `getMeetingSummary`; shows summary points, action items, confusion notes). Use a placeholder chip where `<SourceBadge>` will go.
+- [x] Support a URL param like `?segment=m_001_s014` so links can jump straight to a moment
 
 ## Phase 2: Sat
 - [ ] Replace placeholder chips with `<SourceBadge sourceIds=... />` from #5
-- [ ] Show conflict callouts inside the summary (use `conflictIds`, link to `/conflicts`)
+- [x] Show conflict callouts inside the summary (use `conflictIds`, link to `/conflicts`)
 - [ ] Highlight confusion/term annotations (e.g. "what Compliance means by 'customer data'") inline in the transcript if time allows
 
 ## Phase 3: Sun
