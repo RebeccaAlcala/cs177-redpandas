@@ -1,0 +1,8 @@
+[
+  { "id": "product", "name": "Product", "color": "#7c3aed" },
+  { "id": "compliance", "name": "Compliance", "color": "#0891b2" },
+  { "id": "risk", "name": "Risk", "color": "#dc2626" },
+  { "id": "security", "name": "Security", "color": "#2563eb" },
+  { "id": "eng", "name": "Engineering", "color": "#16a34a" },
+  { "id": "growth", "name": "Growth", "color": "#ea580c" }
+]
