@@ -1,0 +1,41 @@
+{
+  "meetingId": "m_001",
+  "summaryPoints": [
+    {
+      "text": "Compliance said \"customer data\" in the export must include derived and analytics data, not just profile fields.",
+      "claimId": "c_001",
+      "sourceIds": [
+        "src_001",
+        "src_002"
+      ]
+    },
+    {
+      "text": "Product said it has been scoping \"customer data\" as profile data only so the export stays small.",
+      "claimId": "c_002",
+      "sourceIds": []
+    }
+  ],
+  "actionItems": [
+    {
+      "id": "ai_m_001_01",
+      "meetingId": "m_001",
+      "text": "Product and Compliance need to agree on a single definition of \"customer data\" for the export, since the Eng estimate depends on which one wins."
+    },
+    {
+      "id": "ai_m_001_02",
+      "meetingId": "m_001",
+      "text": "Once the definition is settled, Eng should confirm the export scope and whether it can ship this sprint.",
+      "team": "eng"
+    }
+  ],
+  "confusions": [
+    {
+      "text": "Compliance uses \"customer data\" to include derived and analytics data, while Product uses it to mean profile data only.",
+      "term": "customer data",
+      "segmentId": "m_001_s001"
+    }
+  ],
+  "conflictIds": [
+    "x_001"
+  ]
+}
