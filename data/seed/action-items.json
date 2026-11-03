@@ -5,5 +5,47 @@
     "text": "Confirm whether the export must include derived analytics data before estimating.",
     "ownerId": "p_leo",
     "team": "eng"
+  },
+  {
+    "id": "ai_002",
+    "meetingId": "m_001",
+    "text": "Agree on one definition of \"customer data\" for the export.",
+    "ownerId": "p_maya",
+    "team": "product"
+  },
+  {
+    "id": "ai_003",
+    "meetingId": "m_002",
+    "text": "Get the vendor to retrain the match model to the 2% threshold and rerun the test set.",
+    "ownerId": "p_owen",
+    "team": "eng"
+  },
+  {
+    "id": "ai_004",
+    "meetingId": "m_002",
+    "text": "Bring back a retention proposal for ID images.",
+    "ownerId": "p_amir",
+    "team": "security"
+  },
+  {
+    "id": "ai_005",
+    "meetingId": "m_003",
+    "text": "Find the funnel analysis behind the 30% MFA drop-off number.",
+    "ownerId": "p_ben",
+    "team": "growth"
+  },
+  {
+    "id": "ai_006",
+    "meetingId": "m_004",
+    "text": "Require MFA when a workspace turns on its SSO connection.",
+    "ownerId": "p_nina",
+    "team": "eng"
+  },
+  {
+    "id": "ai_007",
+    "meetingId": "m_004",
+    "text": "Watch the trial funnel for a few weeks after the MFA change.",
+    "ownerId": "p_jess",
+    "team": "growth"
   }
 ]

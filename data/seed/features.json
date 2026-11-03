@@ -4,5 +4,17 @@
     "name": "Customer data export",
     "description": "Let customers export their data. Product and Compliance disagree on what \"customer data\" includes.",
     "status": "in_progress"
+  },
+  {
+    "id": "f_auto_kyc",
+    "name": "Automated identity checks",
+    "description": "Replace manual identity review with a vendor match model. The pilot is on hold because Risk and Eng are working from different false-positive thresholds.",
+    "status": "blocked"
+  },
+  {
+    "id": "f_sso_login",
+    "name": "Enterprise SSO",
+    "description": "SAML single sign-on for enterprise workspaces. Security requires MFA while Growth wants signup to stay frictionless.",
+    "status": "in_progress"
   }
 ]

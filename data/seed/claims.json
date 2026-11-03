@@ -6,7 +6,10 @@
     "featureId": "f_data_export",
     "meetingId": "m_001",
     "team": "compliance",
-    "sourceIds": ["src_001", "src_002"]
+    "sourceIds": [
+      "src_001",
+      "src_002"
+    ]
   },
   {
     "id": "c_002",
@@ -17,5 +20,207 @@
     "team": "product",
     "sourceIds": [],
     "contradictsSourceId": "src_003"
+  },
+  {
+    "id": "c_003",
+    "text": "A profile-only export is about 1 sprint of work; including derived and analytics data is about 4 sprints.",
+    "kind": "number",
+    "featureId": "f_data_export",
+    "meetingId": "m_001",
+    "team": "eng",
+    "sourceIds": [
+      "src_004",
+      "src_006"
+    ]
+  },
+  {
+    "id": "c_004",
+    "text": "Hold the export estimate until Product and Compliance agree on one definition, and size both scopes in the meantime.",
+    "kind": "decision",
+    "featureId": "f_data_export",
+    "meetingId": "m_001",
+    "team": "product",
+    "sourceIds": [
+      "src_005"
+    ]
+  },
+  {
+    "id": "c_005",
+    "text": "The Data Export PRD puts derived and analytics data out of scope.",
+    "kind": "statement",
+    "featureId": "f_data_export",
+    "meetingId": "m_001",
+    "team": "product",
+    "sourceIds": [
+      "src_007"
+    ],
+    "contradictsSourceId": "src_003"
+  },
+  {
+    "id": "c_006",
+    "text": "Privacy Policy v3 defines customer data as all data held about a customer, including derived analytics.",
+    "kind": "statement",
+    "featureId": "f_data_export",
+    "meetingId": "m_001",
+    "team": "compliance",
+    "sourceIds": [
+      "src_003",
+      "src_008"
+    ]
+  },
+  {
+    "id": "c_007",
+    "text": "A profile-first release must be labeled a partial export and can't be used to answer data subject requests.",
+    "kind": "decision",
+    "featureId": "f_data_export",
+    "meetingId": "m_001",
+    "team": "compliance",
+    "sourceIds": [
+      "src_009",
+      "src_010"
+    ]
+  },
+  {
+    "id": "c_008",
+    "text": "The false-positive threshold for automated identity checks must be at or below 2%.",
+    "kind": "number",
+    "featureId": "f_auto_kyc",
+    "meetingId": "m_002",
+    "team": "risk",
+    "sourceIds": [
+      "src_011",
+      "src_012"
+    ]
+  },
+  {
+    "id": "c_009",
+    "text": "Automated identity checks were built to a 5% false-positive threshold.",
+    "kind": "number",
+    "featureId": "f_auto_kyc",
+    "meetingId": "m_002",
+    "team": "eng",
+    "sourceIds": [
+      "src_014",
+      "src_013",
+      "src_015"
+    ],
+    "contradictsSourceId": "src_012"
+  },
+  {
+    "id": "c_010",
+    "text": "Retuning the match model to 2% will take about two weeks.",
+    "kind": "commitment",
+    "featureId": "f_auto_kyc",
+    "meetingId": "m_002",
+    "team": "eng",
+    "sourceIds": [
+      "src_015"
+    ]
+  },
+  {
+    "id": "c_011",
+    "text": "Government ID images must be deleted within 90 days unless an exception is approved.",
+    "kind": "statement",
+    "featureId": "f_auto_kyc",
+    "meetingId": "m_002",
+    "team": "security",
+    "sourceIds": [
+      "src_016",
+      "src_017"
+    ]
+  },
+  {
+    "id": "c_012",
+    "text": "Risk needs ID images kept for 24 months to review appeals and tune fraud rules.",
+    "kind": "statement",
+    "featureId": "f_auto_kyc",
+    "meetingId": "m_002",
+    "team": "risk",
+    "sourceIds": [
+      "src_018",
+      "src_019"
+    ],
+    "contradictsSourceId": "src_017"
+  },
+  {
+    "id": "c_013",
+    "text": "The identity checks pilot is on hold until Eng retunes to 2% and the new test run is in.",
+    "kind": "decision",
+    "featureId": "f_auto_kyc",
+    "meetingId": "m_002",
+    "team": "risk",
+    "sourceIds": [
+      "src_020",
+      "src_021"
+    ]
+  },
+  {
+    "id": "c_014",
+    "text": "MFA is required for every account signing in to an enterprise workspace.",
+    "kind": "statement",
+    "featureId": "f_sso_login",
+    "meetingId": "m_003",
+    "team": "security",
+    "sourceIds": [
+      "src_022",
+      "src_023"
+    ]
+  },
+  {
+    "id": "c_015",
+    "text": "Signup must stay frictionless, with new trial users in the product in under a minute.",
+    "kind": "statement",
+    "featureId": "f_sso_login",
+    "meetingId": "m_003",
+    "team": "growth",
+    "sourceIds": [
+      "src_024",
+      "src_025"
+    ]
+  },
+  {
+    "id": "c_016",
+    "text": "MFA at first login costs around 30% of trial signups.",
+    "kind": "number",
+    "featureId": "f_sso_login",
+    "meetingId": "m_003",
+    "team": "growth",
+    "sourceIds": []
+  },
+  {
+    "id": "c_017",
+    "text": "MFA is optional during trials, to be revisited after the pen test.",
+    "kind": "decision",
+    "featureId": "f_sso_login",
+    "meetingId": "m_003",
+    "team": "product",
+    "sourceIds": [
+      "src_026",
+      "src_027"
+    ]
+  },
+  {
+    "id": "c_018",
+    "text": "The pen test reached a trial workspace connected to SSO using a reused password.",
+    "kind": "statement",
+    "featureId": "f_sso_login",
+    "meetingId": "m_004",
+    "team": "security",
+    "sourceIds": [
+      "src_028",
+      "src_029"
+    ]
+  },
+  {
+    "id": "c_019",
+    "text": "MFA is required before any workspace enables SSO, trials included.",
+    "kind": "decision",
+    "featureId": "f_sso_login",
+    "meetingId": "m_004",
+    "team": "product",
+    "sourceIds": [
+      "src_030",
+      "src_031"
+    ]
   }
 ]

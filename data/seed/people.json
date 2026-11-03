@@ -1,5 +1,92 @@
 [
-  { "id": "p_maya", "name": "Maya Chen", "role": "Product Manager", "team": "product" },
-  { "id": "p_sana", "name": "Sana Okoye", "role": "Compliance Lead", "team": "compliance" },
-  { "id": "p_leo", "name": "Leo Park", "role": "Staff Engineer", "team": "eng" }
+  {
+    "id": "p_maya",
+    "name": "Maya Chen",
+    "role": "Product Manager",
+    "team": "product"
+  },
+  {
+    "id": "p_tomas",
+    "name": "Tomás Rivera",
+    "role": "Group Product Manager",
+    "team": "product"
+  },
+  {
+    "id": "p_priya",
+    "name": "Priya Nair",
+    "role": "Product Analyst",
+    "team": "product"
+  },
+  {
+    "id": "p_sana",
+    "name": "Sana Okoye",
+    "role": "Compliance Lead",
+    "team": "compliance"
+  },
+  {
+    "id": "p_ines",
+    "name": "Ines Duarte",
+    "role": "Privacy Counsel",
+    "team": "compliance"
+  },
+  {
+    "id": "p_rafael",
+    "name": "Rafael Mendes",
+    "role": "Head of Fraud Risk",
+    "team": "risk"
+  },
+  {
+    "id": "p_dana",
+    "name": "Dana Whitfield",
+    "role": "Risk Analyst",
+    "team": "risk"
+  },
+  {
+    "id": "p_amir",
+    "name": "Amir Haddad",
+    "role": "Security Lead",
+    "team": "security"
+  },
+  {
+    "id": "p_kira",
+    "name": "Kira Novak",
+    "role": "Application Security Engineer",
+    "team": "security"
+  },
+  {
+    "id": "p_leo",
+    "name": "Leo Park",
+    "role": "Staff Engineer",
+    "team": "eng"
+  },
+  {
+    "id": "p_nina",
+    "name": "Nina Patel",
+    "role": "Engineering Manager",
+    "team": "eng"
+  },
+  {
+    "id": "p_owen",
+    "name": "Owen Brandt",
+    "role": "Backend Engineer",
+    "team": "eng"
+  },
+  {
+    "id": "p_yuki",
+    "name": "Yuki Tanaka",
+    "role": "Identity Engineer",
+    "team": "eng"
+  },
+  {
+    "id": "p_jess",
+    "name": "Jess Morales",
+    "role": "Growth Lead",
+    "team": "growth"
+  },
+  {
+    "id": "p_ben",
+    "name": "Ben Asante",
+    "role": "Growth Product Manager",
+    "team": "growth"
+  }
 ]

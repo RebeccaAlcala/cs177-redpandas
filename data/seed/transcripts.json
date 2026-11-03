@@ -1,5 +1,13 @@
 [
   {
+    "id": "m_001_s000",
+    "meetingId": "m_001",
+    "speakerId": "p_maya",
+    "team": "product",
+    "startSec": 6,
+    "text": "Thanks for joining. The goal today is to lock the scope of the customer data export so Leo can size it."
+  },
+  {
     "id": "m_001_s001",
     "meetingId": "m_001",
     "speakerId": "p_sana",
@@ -14,5 +22,277 @@
     "team": "product",
     "startSec": 95,
     "text": "From the Product side I've been scoping \"customer data\" as profile data only, so the export stays small."
+  },
+  {
+    "id": "m_001_s003",
+    "meetingId": "m_001",
+    "speakerId": "p_ines",
+    "team": "compliance",
+    "startSec": 148,
+    "text": "Privacy Policy v3 is explicit on this. It says customer data covers all data we hold about a customer, including derived analytics."
+  },
+  {
+    "id": "m_001_s004",
+    "meetingId": "m_001",
+    "speakerId": "p_leo",
+    "team": "eng",
+    "startSec": 214,
+    "text": "The estimate swings a lot. Profile data only is about one sprint. Adding derived and analytics data is closer to four, because those tables live in the warehouse and have no per-customer export path today."
+  },
+  {
+    "id": "m_001_s005",
+    "meetingId": "m_001",
+    "speakerId": "p_maya",
+    "team": "product",
+    "startSec": 281,
+    "text": "The roadmap says this ships this sprint. Could we do profile data first and add the rest later?"
+  },
+  {
+    "id": "m_001_s006",
+    "meetingId": "m_001",
+    "speakerId": "p_sana",
+    "team": "compliance",
+    "startSec": 339,
+    "text": "A partial export can be fine as a first release, but we can't call it complete, and it can't be how we answer a data subject request."
+  },
+  {
+    "id": "m_001_s007",
+    "meetingId": "m_001",
+    "speakerId": "p_leo",
+    "team": "eng",
+    "startSec": 402,
+    "text": "Then I don't want to commit to a number until the two of you agree on one definition. I'll size both scopes and post them in the channel."
+  },
+  {
+    "id": "m_001_s008",
+    "meetingId": "m_001",
+    "speakerId": "p_maya",
+    "team": "product",
+    "startSec": 466,
+    "text": "Okay. We hold the estimate, Leo sizes both scopes, and Sana and I come back with one definition."
+  },
+  {
+    "id": "m_002_s001",
+    "meetingId": "m_002",
+    "speakerId": "p_maya",
+    "team": "product",
+    "startSec": 8,
+    "text": "Today is about whether automated identity checks are ready for the pilot. Rafael, do you want to start with the Risk view?"
+  },
+  {
+    "id": "m_002_s002",
+    "meetingId": "m_002",
+    "speakerId": "p_rafael",
+    "team": "risk",
+    "startSec": 31,
+    "text": "Our tolerance for false positives is two percent. Above that, too many legitimate customers land in manual review and we can't clear the queue."
+  },
+  {
+    "id": "m_002_s003",
+    "meetingId": "m_002",
+    "speakerId": "p_dana",
+    "team": "risk",
+    "startSec": 96,
+    "text": "Two percent is also what the Risk Policy says since September. At that level we can hold our 24 hour review commitment."
+  },
+  {
+    "id": "m_002_s004",
+    "meetingId": "m_002",
+    "speakerId": "p_yuki",
+    "team": "eng",
+    "startSec": 158,
+    "text": "Hold on, we built to five percent. That's the number in the vendor integration spec, version one."
+  },
+  {
+    "id": "m_002_s005",
+    "meetingId": "m_002",
+    "speakerId": "p_rafael",
+    "team": "risk",
+    "startSec": 205,
+    "text": "That spec is from the spring. The policy moved to two percent after that."
+  },
+  {
+    "id": "m_002_s006",
+    "meetingId": "m_002",
+    "speakerId": "p_owen",
+    "team": "eng",
+    "startSec": 262,
+    "text": "Nobody told us. The threshold is a config value, but reaching two percent means the vendor retrains the match model, and that's about two weeks plus a new test run."
+  },
+  {
+    "id": "m_002_s007",
+    "meetingId": "m_002",
+    "speakerId": "p_rafael",
+    "team": "risk",
+    "startSec": 330,
+    "text": "Then the pilot waits. I can't sign off on five percent."
+  },
+  {
+    "id": "m_002_s008",
+    "meetingId": "m_002",
+    "speakerId": "p_amir",
+    "team": "security",
+    "startSec": 391,
+    "text": "Separate concern. The integration keeps ID document images for 24 months. Our retention standard says 90 days for government ID images."
+  },
+  {
+    "id": "m_002_s009",
+    "meetingId": "m_002",
+    "speakerId": "p_dana",
+    "team": "risk",
+    "startSec": 447,
+    "text": "We use those images to review appeals and tune the fraud rules. Ninety days is shorter than most of our appeal cases."
+  },
+  {
+    "id": "m_002_s010",
+    "meetingId": "m_002",
+    "speakerId": "p_amir",
+    "team": "security",
+    "startSec": 503,
+    "text": "Then we need an exception on record, or a way to keep what you need without the raw image. Right now there's no approved retention period."
+  },
+  {
+    "id": "m_002_s011",
+    "meetingId": "m_002",
+    "speakerId": "p_maya",
+    "team": "product",
+    "startSec": 570,
+    "text": "So two outcomes. The pilot is on hold until Eng retunes to two percent, and Amir and Dana bring back a retention proposal."
+  },
+  {
+    "id": "m_003_s001",
+    "meetingId": "m_003",
+    "speakerId": "p_maya",
+    "team": "product",
+    "startSec": 7,
+    "text": "We need a call on MFA for enterprise SSO before Nina's team starts the sprint."
+  },
+  {
+    "id": "m_003_s002",
+    "meetingId": "m_003",
+    "speakerId": "p_amir",
+    "team": "security",
+    "startSec": 33,
+    "text": "Security's position is that MFA is required for every account that signs in to an enterprise workspace, admins especially."
+  },
+  {
+    "id": "m_003_s003",
+    "meetingId": "m_003",
+    "speakerId": "p_jess",
+    "team": "growth",
+    "startSec": 88,
+    "text": "If we force MFA on day one we hurt trials. Growth needs signup to stay frictionless, with a new user in the product in under a minute."
+  },
+  {
+    "id": "m_003_s004",
+    "meetingId": "m_003",
+    "speakerId": "p_ben",
+    "team": "growth",
+    "startSec": 141,
+    "text": "We've seen MFA at first login cost around thirty percent of trial signups."
+  },
+  {
+    "id": "m_003_s005",
+    "meetingId": "m_003",
+    "speakerId": "p_kira",
+    "team": "security",
+    "startSec": 187,
+    "text": "Where is that number from?"
+  },
+  {
+    "id": "m_003_s006",
+    "meetingId": "m_003",
+    "speakerId": "p_ben",
+    "team": "growth",
+    "startSec": 205,
+    "text": "It's from memory, an older funnel analysis. I don't have the dashboard handy."
+  },
+  {
+    "id": "m_003_s007",
+    "meetingId": "m_003",
+    "speakerId": "p_nina",
+    "team": "eng",
+    "startSec": 255,
+    "text": "Eng can do either. Prompting later is a small change as long as we decide before the sprint starts."
+  },
+  {
+    "id": "m_003_s008",
+    "meetingId": "m_003",
+    "speakerId": "p_amir",
+    "team": "security",
+    "startSec": 310,
+    "text": "I can live with optional MFA during a trial if we revisit it after the pen test."
+  },
+  {
+    "id": "m_003_s009",
+    "meetingId": "m_003",
+    "speakerId": "p_maya",
+    "team": "product",
+    "startSec": 372,
+    "text": "Then for now MFA is optional during trials, and we revisit it after the pen test."
+  },
+  {
+    "id": "m_004_s001",
+    "meetingId": "m_004",
+    "speakerId": "p_maya",
+    "team": "product",
+    "startSec": 5,
+    "text": "The pen test results are in, so we're back on last week's MFA decision."
+  },
+  {
+    "id": "m_004_s002",
+    "meetingId": "m_004",
+    "speakerId": "p_kira",
+    "team": "security",
+    "startSec": 29,
+    "text": "The testers got into a trial workspace with a reused password and invited themselves as admin. Trial workspaces connected to SSO hold real customer directory data."
+  },
+  {
+    "id": "m_004_s003",
+    "meetingId": "m_004",
+    "speakerId": "p_amir",
+    "team": "security",
+    "startSec": 94,
+    "text": "That's the scenario I was worried about. Optional MFA has to go for any workspace connected to SSO, trials included."
+  },
+  {
+    "id": "m_004_s004",
+    "meetingId": "m_004",
+    "speakerId": "p_jess",
+    "team": "growth",
+    "startSec": 152,
+    "text": "Trial conversion is still my number. Can we at least not ask on the very first screen?"
+  },
+  {
+    "id": "m_004_s005",
+    "meetingId": "m_004",
+    "speakerId": "p_nina",
+    "team": "eng",
+    "startSec": 208,
+    "text": "We can. Require MFA when someone turns on the SSO connection, not at signup. Email-only trial signups stay as they are."
+  },
+  {
+    "id": "m_004_s006",
+    "meetingId": "m_004",
+    "speakerId": "p_kira",
+    "team": "security",
+    "startSec": 265,
+    "text": "That closes the finding, as long as no SSO connection can exist without MFA."
+  },
+  {
+    "id": "m_004_s007",
+    "meetingId": "m_004",
+    "speakerId": "p_jess",
+    "team": "growth",
+    "startSec": 318,
+    "text": "I can accept that. I still want to watch the funnel for a few weeks."
+  },
+  {
+    "id": "m_004_s008",
+    "meetingId": "m_004",
+    "speakerId": "p_maya",
+    "team": "product",
+    "startSec": 366,
+    "text": "Decision: MFA is required before any workspace enables SSO, trials included. This replaces last week's decision."
   }
 ]
