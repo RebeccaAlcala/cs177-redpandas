@@ -27,7 +27,7 @@
 ## 3. Read the AI summary with its flagged conflict (45 sec)
 
 1. Under **Linked meetings**, click **Data export scoping sync**.
-2. Point at the red **Conflict detected** card (82% confidence).
+2. Point at the orange **Conflict detected** card (82% confidence).
 3. Point at the two **AI summary** points, including the red **No source** chip on the second one.
 
 > "Here's the summary of that meeting. It caught something nobody said out loud: two teams left the room with different definitions. And every point shows its evidence. This one has two sources. This one has none, so Maya knows not to repeat it as fact."

@@ -28,14 +28,14 @@ export function FeatureList({ features }: { features: FeatureRow[] }) {
           value={query}
           onChange={(e) => setQuery(e.target.value)}
           placeholder="Search features…"
-          className="min-w-0 flex-1 rounded-md border border-gray-300 bg-white px-3 py-1.5 text-sm text-gray-800 placeholder:text-gray-400"
+          className="min-w-0 flex-1 rounded-lg border border-gray-300 bg-white px-3 py-1.5 text-sm text-gray-800 placeholder:text-gray-500"
         />
         <label className="flex items-center gap-2 text-sm text-gray-600">
           Status
           <select
             value={status}
             onChange={(e) => setStatus(e.target.value)}
-            className="rounded-md border border-gray-300 bg-white px-2 py-1 text-sm text-gray-800"
+            className="rounded-lg border border-gray-300 bg-white px-2 py-1 text-sm text-gray-800"
           >
             <option value="">All statuses</option>
             {Object.entries(STATUS_META).map(([id, m]) => (
@@ -55,14 +55,14 @@ export function FeatureList({ features }: { features: FeatureRow[] }) {
             <li key={f.id}>
               <Link
                 href={`/features/${f.id}`}
-                className="block h-full rounded-xl border border-gray-200 bg-white p-5 shadow-sm transition-colors hover:border-gray-300 hover:bg-gray-50"
+                className="flex h-full flex-col rounded-2xl border border-gray-200 bg-white p-6 shadow-sm transition-shadow hover:shadow-md"
               >
                 <div className="flex items-start justify-between gap-3">
-                  <h2 className="text-sm font-semibold text-gray-900">{f.name}</h2>
+                  <h2 className="font-display text-2xl leading-tight text-gray-900">{f.name}</h2>
                   <FeatureStatusBadge status={f.status} />
                 </div>
-                <p className="mt-2 line-clamp-2 text-sm text-gray-600">{f.description}</p>
-                <div className="mt-4 flex flex-wrap items-center gap-x-3 gap-y-1 text-xs text-gray-500">
+                <p className="mt-2 line-clamp-3 text-sm leading-relaxed text-gray-600">{f.description}</p>
+                <div className="mt-auto flex flex-wrap items-center gap-x-3 gap-y-1 pt-5 text-sm text-gray-500">
                   <span>
                     {f.meetingCount} meeting{f.meetingCount === 1 ? "" : "s"}
                   </span>

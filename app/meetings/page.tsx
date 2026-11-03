@@ -11,7 +11,7 @@ export default async function MeetingsPage({ searchParams }: PageProps<"/meeting
   const meetings = getMeetings();
 
   return (
-    <main className="mx-auto max-w-5xl px-6 py-10">
+    <main className="mx-auto max-w-6xl px-6 py-12">
       <PageHeader
         title="Meetings"
         subtitle="Every meeting the recorder joined, with team-tagged transcripts and AI summaries."

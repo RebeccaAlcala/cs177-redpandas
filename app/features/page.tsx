@@ -12,7 +12,7 @@ export default function FeaturesPage() {
   }));
 
   return (
-    <main className="mx-auto max-w-5xl px-6 py-10">
+    <main className="mx-auto max-w-6xl px-6 py-12">
       <PageHeader
         title="Features"
         subtitle="Browse by feature to see what each team said about it, and where they disagree."

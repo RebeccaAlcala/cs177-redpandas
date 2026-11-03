@@ -36,7 +36,7 @@ export default async function DecisionsPage({ searchParams }: PageProps<"/decisi
     .filter((g) => g.decisions.length > 0);
 
   return (
-    <main className="mx-auto max-w-5xl px-6 py-10">
+    <main className="mx-auto max-w-6xl px-6 py-12">
       <PageHeader
         title="Decisions"
         subtitle="Every decision per feature, linked to its sources and the discussion behind it."
@@ -63,17 +63,17 @@ export default async function DecisionsPage({ searchParams }: PageProps<"/decisi
         <div className="space-y-8">
           {groups.map(({ feature, decisions }) => (
             <section key={feature.id}>
-              <h2 className="mb-3 text-sm font-semibold text-gray-900">
+              <h2 className="mb-4 font-display text-2xl text-gray-900">
                 <Link href={`/features/${feature.id}`} className="hover:underline">
                   {feature.name}
                 </Link>
               </h2>
-              <ul className="divide-y divide-gray-100 overflow-hidden rounded-xl border border-gray-200 bg-white shadow-sm">
+              <ul className="divide-y divide-gray-100 overflow-hidden rounded-2xl border border-gray-200 bg-white shadow-sm">
                 {decisions.map(({ decision: d, freshness }) => (
-                  <li key={d.id} className="px-5 py-4">
+                  <li key={d.id} className="px-6 py-5">
                     <div className="flex items-start justify-between gap-4">
                       <p
-                        className={`text-sm ${
+                        className={`text-base leading-relaxed ${
                           freshness === "overturned" ? "text-gray-500 line-through" : "text-gray-900"
                         }`}
                       >
@@ -81,12 +81,12 @@ export default async function DecisionsPage({ searchParams }: PageProps<"/decisi
                       </p>
                       <Link
                         href={`/decisions/${d.id}`}
-                        className="shrink-0 text-sm font-medium text-gray-900 hover:underline"
+                        className="shrink-0 text-sm font-medium text-accent hover:underline"
                       >
                         Why →
                       </Link>
                     </div>
-                    <div className="mt-2 flex flex-wrap items-center gap-x-2 gap-y-1.5">
+                    <div className="mt-3 flex flex-wrap items-center gap-x-2 gap-y-1.5">
                       <span className="mr-1 text-xs text-gray-500">{formatMeetingDate(d.date)}</span>
                       {d.madeByTeams.map((t) => (
                         <TeamTag key={t} team={t} />

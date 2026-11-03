@@ -9,9 +9,9 @@ export function Card({
   children: ReactNode;
 }) {
   return (
-    <div className="rounded-xl border border-gray-200 bg-white p-5 shadow-sm">
+    <div className="rounded-2xl border border-gray-200 bg-white p-6 shadow-sm">
       {title ? (
-        <h3 className="mb-3 text-sm font-semibold text-gray-900">{title}</h3>
+        <h3 className="mb-4 text-sm font-semibold text-gray-900">{title}</h3>
       ) : null}
       {children}
     </div>

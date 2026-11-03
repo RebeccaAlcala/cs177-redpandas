@@ -32,7 +32,7 @@ function renderText(text: string, terms: Map<string, string>, query: string): Re
     const low = chunk.toLowerCase();
     if (q && low === q) {
       return (
-        <mark key={i} className="rounded bg-yellow-200 px-0.5 text-gray-900">
+        <mark key={i} className="rounded bg-amber-200 px-0.5 text-gray-900">
           {chunk}
         </mark>
       );
@@ -102,7 +102,7 @@ export function TranscriptList({
             onChange={(e) => setQuery(e.target.value)}
             placeholder="Search transcript or speaker…"
             aria-label="Search transcript"
-            className="w-full rounded-md border border-gray-300 bg-white px-3 py-1.5 text-sm text-gray-800 placeholder:text-gray-400 focus:border-gray-500 focus:outline-none"
+            className="w-full rounded-lg border border-gray-300 bg-white px-3 py-1.5 text-sm text-gray-800 placeholder:text-gray-500 focus:border-gray-500 focus:outline-none"
           />
           <div className="flex flex-wrap items-center gap-1.5" role="group" aria-label="Filter by team">
             <button
@@ -111,7 +111,7 @@ export function TranscriptList({
               aria-pressed={team === ""}
               className={`rounded-full px-2.5 py-0.5 text-xs font-medium ring-1 ring-inset transition-colors ${
                 team === ""
-                  ? "bg-gray-900 text-white ring-gray-900"
+                  ? "bg-accent text-white ring-accent"
                   : "bg-white text-gray-600 ring-gray-300 hover:bg-gray-50"
               }`}
             >
@@ -137,7 +137,7 @@ export function TranscriptList({
               );
             })}
             {filtering ? (
-              <span className="ml-auto text-xs text-gray-400">
+              <span className="ml-auto text-xs text-gray-500">
                 {visible.length} of {segments.length} lines
               </span>
             ) : null}
@@ -160,7 +160,7 @@ export function TranscriptList({
           </button>
         </p>
       ) : (
-        <ol className="divide-y divide-gray-100">
+        <ol className="space-y-0.5 pt-1">
           {visible.map((seg) => {
             const person = peopleById.get(seg.speakerId);
             const active = seg.id === highlightSegmentId;
@@ -168,8 +168,8 @@ export function TranscriptList({
               <li
                 key={seg.id}
                 id={seg.id}
-                className={`flex scroll-mt-24 gap-3 px-3 py-3 transition-colors ${
-                  active ? "rounded-lg bg-amber-50 ring-2 ring-inset ring-amber-300" : ""
+                className={`flex scroll-mt-24 gap-3 rounded-xl px-3 py-3.5 transition-colors ${
+                  active ? "bg-accent-soft ring-1 ring-inset ring-accent/30" : ""
                 }`}
               >
                 <Avatar person={person} />
@@ -179,7 +179,7 @@ export function TranscriptList({
                       {person?.name ?? seg.speakerId}
                     </span>
                     <TeamTag team={seg.team} />
-                    <span className="font-mono text-xs text-gray-400">
+                    <span className="font-mono text-xs text-gray-500">
                       {formatTimestamp(seg.startSec)}
                     </span>
                   </div>

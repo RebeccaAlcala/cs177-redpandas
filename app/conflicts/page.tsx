@@ -31,7 +31,7 @@ export default async function ConflictsPage({ searchParams }: PageProps<"/confli
     .sort((a, b) => b.confidence - a.confidence);
 
   return (
-    <main className="mx-auto max-w-5xl px-6 py-10">
+    <main className="mx-auto max-w-6xl px-6 py-12">
       <PageHeader
         title="Conflicts"
         subtitle="Where teams contradict each other, with the evidence on both sides. Highest confidence first."
@@ -75,11 +75,11 @@ export default async function ConflictsPage({ searchParams }: PageProps<"/confli
               <li
                 key={x.id}
                 id={x.id}
-                className="scroll-mt-6 rounded-xl border border-gray-200 bg-white p-5 shadow-sm"
+                className="scroll-mt-20 rounded-2xl border border-gray-200 bg-white p-6 shadow-sm"
               >
-                <div className="flex flex-wrap items-start justify-between gap-x-6 gap-y-2">
-                  <div className="min-w-0 flex-1">
-                    <h2 className="text-base font-semibold text-gray-900">{x.title}</h2>
+                <div className="flex flex-wrap items-start justify-between gap-x-6 gap-y-3">
+                  <div className="min-w-0 flex-1 basis-64">
+                    <h2 className="font-display text-2xl leading-snug text-gray-900">{x.title}</h2>
                     {feature ? (
                       <Link
                         href={`/features/${feature.id}`}
@@ -109,13 +109,13 @@ export default async function ConflictsPage({ searchParams }: PageProps<"/confli
 
                 <div className="mt-4 grid gap-3 md:grid-cols-2">
                   {sides.map(({ team: sideTeam, claim }) => (
-                    <div key={sideTeam} className="rounded-lg bg-orange-50/60 p-3">
+                    <div key={sideTeam} className="rounded-xl bg-gray-50 p-4">
                       <TeamTag team={sideTeam} />
-                      <p className="mt-2 text-sm text-gray-800">
+                      <p className="mt-2.5 text-sm leading-relaxed text-gray-800">
                         {claim?.text ?? "Claim not found."}
                       </p>
                       {claim ? (
-                        <div className="mt-2">
+                        <div className="mt-3">
                           <SourceBadge
                             sourceIds={claim.sourceIds}
                             contradictsSourceId={claim.contradictsSourceId}
@@ -126,7 +126,7 @@ export default async function ConflictsPage({ searchParams }: PageProps<"/confli
                   ))}
                 </div>
 
-                <p className="mt-4 text-sm text-gray-700">{x.explanation}</p>
+                <p className="mt-5 text-sm leading-relaxed text-gray-700">{x.explanation}</p>
 
                 {x.suggestedQuestions.length > 0 ? (
                   <div className="mt-3">

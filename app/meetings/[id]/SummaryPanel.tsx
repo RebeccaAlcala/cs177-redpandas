@@ -3,7 +3,7 @@ import { getConflicts, getMeetingSummary, getPeople } from "@/lib/data";
 import { Card } from "@/components/ui/Card";
 import { EmptyState } from "@/components/ui/EmptyState";
 import { TeamTag } from "@/components/ui/TeamTag";
-import { SourceChip } from "./SourceChip";
+import { SourceBadge } from "@/components/source";
 
 // Right-hand AI summary for a meeting: conflicts, summary points (with
 // source chips), action items, confusion notes. Reads data/ai-cache via
@@ -33,20 +33,20 @@ export function SummaryPanel({ meetingId }: { meetingId: string }) {
             <Link
               key={x.id}
               href="/conflicts"
-              className="block rounded-xl border border-red-200 bg-red-50 p-4 transition-colors hover:bg-red-100"
+              className="block rounded-2xl border border-orange-200 bg-orange-50 p-5 transition-colors hover:bg-orange-100/70"
             >
-              <div className="flex items-center gap-2 text-xs font-semibold uppercase tracking-wide text-red-700">
-                <span aria-hidden>⚠</span> Conflict detected
-                <span className="ml-auto font-normal normal-case text-red-600">
+              <div className="flex items-center gap-2 text-xs font-semibold text-orange-800">
+                Conflict detected
+                <span className="ml-auto font-normal text-orange-800">
                   {Math.round((x.confidence ?? 0) * 100)}% confidence
                 </span>
               </div>
-              <p className="mt-1.5 text-sm font-medium text-gray-900">{x.title}</p>
-              <div className="mt-2 flex items-center gap-1.5 text-xs text-gray-500">
+              <p className="mt-2 font-display text-xl leading-snug text-gray-900">{x.title}</p>
+              <div className="mt-3 flex items-center gap-1.5 text-xs text-gray-500">
                 <TeamTag team={x.teamA} />
                 <span>vs</span>
                 <TeamTag team={x.teamB} />
-                <span className="ml-auto text-red-700">View →</span>
+                <span className="ml-auto font-medium text-orange-800">View →</span>
               </div>
             </Link>
           ))}
@@ -63,7 +63,7 @@ export function SummaryPanel({ meetingId }: { meetingId: string }) {
                 <span className="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-gray-400" />
                 <div className="min-w-0">
                   <span className="leading-relaxed">{pt.text}</span>{" "}
-                  <SourceChip sourceIds={pt.sourceIds ?? []} />
+                  <SourceBadge sourceIds={pt.sourceIds ?? []} />
                 </div>
               </li>
             ))}

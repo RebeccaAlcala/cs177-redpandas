@@ -3,17 +3,19 @@
 import { useEffect, useState } from "react";
 import { PageHeader } from "@/components/ui/PageHeader";
 import { Card } from "@/components/ui/Card";
+import { EmptyState } from "@/components/ui/EmptyState";
 import { Button } from "@/components/ui/Button";
 import { TeamTag } from "@/components/ui/TeamTag";
 import { TEAM_META, TEAM_IDS } from "@/components/ui/teams";
-import type { TeamId } from "@/lib/types";
+import { TYPE_META, TypeIcon } from "@/components/source/meta";
+import type { SourceType, TeamId } from "@/lib/types";
 
 type SourceKey = "calendar" | "slack" | "docs";
 
-const SOURCES: { key: SourceKey; name: string; blurb: string }[] = [
-  { key: "calendar", name: "Google Calendar", blurb: "Pull meetings and attendees" },
-  { key: "slack", name: "Slack", blurb: "Import channel discussions" },
-  { key: "docs", name: "Google Docs", blurb: "Link specs and policies" },
+const SOURCES: { key: SourceKey; name: string; blurb: string; icon: SourceType }[] = [
+  { key: "calendar", name: "Google Calendar", blurb: "Pull meetings and attendees", icon: "meeting" },
+  { key: "slack", name: "Slack", blurb: "Import channel discussions", icon: "slack" },
+  { key: "docs", name: "Google Docs", blurb: "Link specs and policies", icon: "doc" },
 ];
 
 // Channels / folders the PM tags to a team.
@@ -95,10 +97,15 @@ export default function ConnectPage() {
           return (
             <Card key={src.key}>
               <div className="flex h-full flex-col">
-                <div className="text-sm font-semibold text-gray-900">
+                <span
+                  className={`inline-flex h-10 w-10 items-center justify-center rounded-xl ring-1 ring-inset ${TYPE_META[src.icon].bg} ${TYPE_META[src.icon].text} ${TYPE_META[src.icon].ring}`}
+                >
+                  <TypeIcon type={src.icon} className="h-5 w-5" />
+                </span>
+                <div className="mt-4 text-base font-semibold text-gray-900">
                   {src.name}
                 </div>
-                <p className="mt-1 mb-4 text-xs text-gray-500">{src.blurb}</p>
+                <p className="mt-1 mb-5 text-sm text-gray-500">{src.blurb}</p>
                 <div className="mt-auto">
                   <Button
                     variant={on ? "secondary" : "primary"}
@@ -116,7 +123,7 @@ export default function ConnectPage() {
 
       {/* Team tagging */}
       <section className="mt-10">
-        <h2 className="text-sm font-semibold text-gray-900">
+        <h2 className="font-display text-2xl text-gray-900">
           Tag channels &amp; folders
         </h2>
         <p className="mt-1 mb-4 text-sm text-gray-600">
@@ -124,11 +131,9 @@ export default function ConnectPage() {
         </p>
 
         {visibleItems.length === 0 ? (
-          <div className="rounded-xl border border-dashed border-gray-300 bg-gray-50 px-6 py-10 text-center text-sm text-gray-500">
-            Connect a source above to start tagging its channels and folders.
-          </div>
+          <EmptyState message="Connect a source above to start tagging its channels and folders." />
         ) : (
-          <ul className="divide-y divide-gray-100 overflow-hidden rounded-xl border border-gray-200 bg-white">
+          <ul className="divide-y divide-gray-100 overflow-hidden rounded-2xl border border-gray-200 bg-white">
             {visibleItems.map((it) => {
               const team = state.tags[it.id] ?? "";
               return (
@@ -138,7 +143,7 @@ export default function ConnectPage() {
                 >
                   <div className="flex items-center gap-3">
                     <span className="text-sm text-gray-800">{it.label}</span>
-                    <span className="text-xs uppercase tracking-wide text-gray-400">
+                    <span className="text-xs text-gray-500">
                       {SOURCES.find((s) => s.key === it.source)?.name}
                     </span>
                   </div>
@@ -149,7 +154,7 @@ export default function ConnectPage() {
                       onChange={(e) =>
                         setTag(it.id, e.target.value as TeamId | "")
                       }
-                      className="rounded-md border border-gray-300 bg-white px-2 py-1 text-sm text-gray-800"
+                      className="rounded-lg border border-gray-300 bg-white px-2 py-1 text-sm text-gray-800"
                     >
                       <option value="">Unassigned</option>
                       {TEAM_IDS.map((t) => (
@@ -175,7 +180,7 @@ export default function ConnectPage() {
             Go to meetings
           </Button>
         )}
-        <span className="text-xs text-gray-400">
+        <span className="text-xs text-gray-500">
           Saved locally in your browser.
         </span>
       </div>

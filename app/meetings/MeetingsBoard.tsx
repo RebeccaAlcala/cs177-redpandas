@@ -96,24 +96,25 @@ export function MeetingsBoard({
     <div className="space-y-8">
       {/* Auto-join from calendar (mock) */}
       <Card>
-        <div className="mb-4 flex flex-wrap items-start justify-between gap-x-4 gap-y-2">
+        <div className="flex flex-wrap items-start justify-between gap-x-4 gap-y-2">
           <div>
             <h2 className="text-sm font-semibold text-gray-900">
               Recorder bot · auto-join from Google Calendar
             </h2>
-            <p className="mt-1 text-xs text-gray-500">
-              The bot joins these meetings, records them, and links the transcript to the feature.
+            <p className="mt-1 text-sm text-gray-500">
+              {upcoming.length === 0
+                ? "Nothing upcoming right now. The bot will join and record the next meeting on your calendar."
+                : "The bot joins these meetings, records them, and links the transcript to the feature."}
             </p>
           </div>
-          <span className="shrink-0 rounded-full bg-emerald-50 px-2.5 py-0.5 text-xs font-medium text-emerald-700 ring-1 ring-inset ring-emerald-200">
+          <span className="inline-flex shrink-0 items-center gap-1.5 rounded-full bg-accent-soft px-2.5 py-0.5 text-xs font-medium text-accent">
+            <span className="h-1.5 w-1.5 rounded-full bg-accent" />
             Calendar connected
           </span>
         </div>
 
-        {upcoming.length === 0 ? (
-          <EmptyState message="No upcoming meetings on your calendar." />
-        ) : (
-          <ul className="divide-y divide-gray-100">
+        {upcoming.length === 0 ? null : (
+          <ul className="mt-4 divide-y divide-gray-100">
             {upcoming.map((m) => {
               const status = statusOf(m);
               const auto = autoJoinOf(m);
@@ -131,7 +132,7 @@ export function MeetingsBoard({
                       aria-checked={auto}
                       onClick={() => toggleAutoJoin(m)}
                       className={`relative h-5 w-9 rounded-full transition-colors ${
-                        auto ? "bg-gray-900" : "bg-gray-300"
+                        auto ? "bg-accent" : "bg-gray-300"
                       }`}
                     >
                       <span
@@ -150,7 +151,7 @@ export function MeetingsBoard({
                       <button
                         type="button"
                         onClick={() => setStatus(m.id, "recording")}
-                        className="w-full rounded-md bg-gray-900 px-3 py-1.5 text-xs font-medium text-white hover:bg-gray-800"
+                        className="w-full rounded-lg bg-accent px-3 py-1.5 text-xs font-medium text-white hover:bg-accent-hover"
                       >
                         ● Start recording
                       </button>
@@ -158,7 +159,7 @@ export function MeetingsBoard({
                       <button
                         type="button"
                         onClick={() => setStatus(m.id, "recorded")}
-                        className="w-full rounded-md bg-red-600 px-3 py-1.5 text-xs font-medium text-white hover:bg-red-700"
+                        className="w-full rounded-lg bg-red-600 px-3 py-1.5 text-xs font-medium text-white hover:bg-red-700"
                       >
                         ■ Stop recording
                       </button>
@@ -180,14 +181,14 @@ export function MeetingsBoard({
 
       {/* All meetings */}
       <section>
-        <div className="mb-3 flex flex-wrap items-center justify-between gap-x-4 gap-y-2">
-          <h2 className="text-sm font-semibold text-gray-900">All meetings</h2>
+        <div className="mb-4 flex flex-wrap items-center justify-between gap-x-4 gap-y-2">
+          <h2 className="font-display text-2xl text-gray-900">All meetings</h2>
           <label className="flex items-center gap-2 text-sm text-gray-600">
             Feature
             <select
               value={filter}
               onChange={(e) => setFilter(e.target.value)}
-              className="rounded-md border border-gray-300 bg-white px-2 py-1 text-sm text-gray-800"
+              className="rounded-lg border border-gray-300 bg-white px-2 py-1 text-sm text-gray-800"
             >
               <option value="">All features</option>
               {features.map((f) => (
@@ -202,7 +203,7 @@ export function MeetingsBoard({
         {listed.length === 0 ? (
           <EmptyState message="No meetings are linked to this feature yet." />
         ) : (
-          <ul className="divide-y divide-gray-100 overflow-hidden rounded-xl border border-gray-200 bg-white shadow-sm">
+          <ul className="divide-y divide-gray-100 overflow-hidden rounded-2xl border border-gray-200 bg-white shadow-sm">
             {listed.map((m) => {
               const fid = featureOf(m);
               const attendees = (m.attendeeIds ?? [])
@@ -211,16 +212,16 @@ export function MeetingsBoard({
               return (
                 <li
                   key={m.id}
-                  className="flex flex-wrap items-center gap-x-4 gap-y-3 px-4 py-4 sm:px-5"
+                  className="flex flex-wrap items-center gap-x-5 gap-y-3 px-5 py-5 transition-colors hover:bg-gray-50 sm:px-6"
                 >
                   <div className="min-w-0 basis-full sm:basis-auto sm:flex-1">
                     <Link
                       href={`/meetings/${m.id}`}
-                      className="text-sm font-semibold text-gray-900 hover:underline"
+                      className="text-base font-semibold text-gray-900 hover:underline"
                     >
                       {m.title}
                     </Link>
-                    <div className="mt-0.5 flex flex-wrap items-center gap-x-2 text-xs text-gray-500">
+                    <div className="mt-1 flex flex-wrap items-center gap-x-2 gap-y-1 text-sm text-gray-500">
                       <span>{formatMeetingDate(m.date)}</span>
                       <span aria-hidden>·</span>
                       <span>{formatDuration(m.durationMin)}</span>
@@ -229,7 +230,7 @@ export function MeetingsBoard({
                           <span aria-hidden>·</span>
                           <Link
                             href={`/features/${fid}`}
-                            className="rounded-full bg-gray-900/5 px-2 py-0.5 font-medium text-gray-700 hover:bg-gray-900/10"
+                            className="font-medium text-gray-700 underline-offset-2 hover:text-gray-900 hover:underline"
                           >
                             {featureName.get(fid)}
                           </Link>
@@ -245,7 +246,7 @@ export function MeetingsBoard({
                     aria-label={`Link ${m.title} to a feature`}
                     value={fid}
                     onChange={(e) => setFeature(m.id, e.target.value)}
-                    className="ml-auto w-40 rounded-md border border-gray-300 bg-white px-2 py-1 text-xs text-gray-700 sm:ml-0 sm:w-44"
+                    className="ml-auto w-40 rounded-lg border border-gray-300 bg-white px-2 py-1 text-xs text-gray-700 sm:ml-0 sm:w-44"
                   >
                     <option value="">Link to feature…</option>
                     {features.map((f) => (

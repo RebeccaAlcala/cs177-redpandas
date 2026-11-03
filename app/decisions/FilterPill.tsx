@@ -19,7 +19,7 @@ export function FilterPill({
       aria-current={active ? "true" : undefined}
       className={`rounded-full px-3 py-1 text-xs font-medium ring-1 ring-inset transition-colors ${
         active
-          ? "bg-gray-900 text-white ring-gray-900"
+          ? "bg-accent text-white ring-accent"
           : "bg-white text-gray-700 ring-gray-300 hover:bg-gray-50"
       }`}
     >

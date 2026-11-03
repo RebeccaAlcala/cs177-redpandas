@@ -19,7 +19,7 @@ export default async function TracePage({
 
   if (!item) {
     return (
-      <main className="mx-auto max-w-3xl px-6 py-10">
+      <main className="mx-auto max-w-3xl px-6 py-12">
         <PageHeader title="Source not found" subtitle={sourceId} />
         <EmptyState message="We couldn't find that source. It may have been removed, or the link is wrong." />
         <p className="mt-4 text-sm">
@@ -41,7 +41,7 @@ export default async function TracePage({
     .filter((w) => w.target);
 
   return (
-    <main className="mx-auto max-w-3xl px-6 py-10">
+    <main className="mx-auto max-w-3xl px-6 py-12">
       <PageHeader title="Source" subtitle="Where a claim came from" />
 
       <div className="space-y-4">
