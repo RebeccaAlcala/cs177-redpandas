@@ -98,7 +98,7 @@ export default async function FeatureDetailPage({ params }: PageProps<"/features
 
         {/* By team */}
         <section>
-          <h2 className="mb-4 font-display text-2xl text-gray-900">What each team said</h2>
+          <h2 className="mb-4 font-display font-medium text-2xl text-gray-900">What each team said</h2>
           {claims.length === 0 ? (
             <EmptyState message="No team has said anything about this feature yet." />
           ) : (
@@ -114,7 +114,7 @@ export default async function FeatureDetailPage({ params }: PageProps<"/features
         {/* Conflicts */}
         <section>
           <div className="mb-3 flex items-center justify-between">
-            <h2 className="font-display text-2xl text-gray-900">Conflicts ({conflicts.length})</h2>
+            <h2 className="font-display font-medium text-2xl text-gray-900">Conflicts ({conflicts.length})</h2>
             <Link href="/conflicts" className="text-xs text-gray-600 hover:text-gray-900 hover:underline">
               All conflicts →
             </Link>
@@ -133,7 +133,7 @@ export default async function FeatureDetailPage({ params }: PageProps<"/features
                     className="scroll-mt-20 rounded-2xl border border-gray-200 bg-white p-6 shadow-sm"
                   >
                     <div className="flex flex-wrap items-start justify-between gap-3">
-                      <h3 className="font-display text-xl leading-snug text-gray-900">{x.title}</h3>
+                      <h3 className="font-display font-medium text-xl leading-snug text-gray-900">{x.title}</h3>
                       <span className="text-xs text-gray-500">
                         {Math.round(x.confidence * 100)}% confidence
                       </span>
@@ -170,7 +170,7 @@ export default async function FeatureDetailPage({ params }: PageProps<"/features
         {/* Decisions */}
         <section>
           <div className="mb-3 flex items-center justify-between">
-            <h2 className="font-display text-2xl text-gray-900">Decisions ({decisions.length})</h2>
+            <h2 className="font-display font-medium text-2xl text-gray-900">Decisions ({decisions.length})</h2>
             <Link href="/decisions" className="text-xs text-gray-600 hover:text-gray-900 hover:underline">
               Decision log →
             </Link>

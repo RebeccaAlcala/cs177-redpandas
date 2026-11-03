@@ -16,7 +16,7 @@ export function SiteHeader() {
               <path d="M8 16.5c3-1 2-7 8-9" />
             </svg>
           </span>
-          <span className="hidden font-display text-xl leading-none text-gray-900 md:inline">
+          <span className="hidden font-display font-medium text-xl leading-none text-gray-900 md:inline">
             Meeting Source Tracer
           </span>
         </Link>

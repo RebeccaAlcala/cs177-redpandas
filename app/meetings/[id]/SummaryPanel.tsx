@@ -41,7 +41,7 @@ export function SummaryPanel({ meetingId }: { meetingId: string }) {
                   {Math.round((x.confidence ?? 0) * 100)}% confidence
                 </span>
               </div>
-              <p className="mt-2 font-display text-xl leading-snug text-gray-900">{x.title}</p>
+              <p className="mt-2 font-display font-medium text-xl leading-snug text-gray-900">{x.title}</p>
               <div className="mt-3 flex items-center gap-1.5 text-xs text-gray-500">
                 <TeamTag team={x.teamA} />
                 <span>vs</span>

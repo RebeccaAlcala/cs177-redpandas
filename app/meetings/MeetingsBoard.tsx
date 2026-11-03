@@ -5,6 +5,7 @@ import Link from "next/link";
 import type { Feature, Meeting, Person } from "@/lib/types";
 import { Card } from "@/components/ui/Card";
 import { EmptyState } from "@/components/ui/EmptyState";
+import { TeamShareBar, type TeamShare } from "@/components/ui/TeamShareBar";
 import { AvatarStack } from "@/components/transcript/Avatar";
 import { RecordingBadge } from "@/components/transcript/RecordingBadge";
 import { formatDuration, formatMeetingDate } from "@/components/transcript/format";
@@ -26,11 +27,13 @@ export function MeetingsBoard({
   meetings,
   features,
   people,
+  talkShare = {},
   initialFeatureId = "",
 }: {
   meetings: Meeting[];
   features: Feature[];
   people: Person[];
+  talkShare?: Record<string, TeamShare[]>;
   initialFeatureId?: string;
 }) {
   const [local, setLocal] = useState<Local>(EMPTY);
@@ -182,7 +185,7 @@ export function MeetingsBoard({
       {/* All meetings */}
       <section>
         <div className="mb-4 flex flex-wrap items-center justify-between gap-x-4 gap-y-2">
-          <h2 className="font-display text-2xl text-gray-900">All meetings</h2>
+          <h2 className="font-display font-medium text-2xl text-gray-900">All meetings</h2>
           <label className="flex items-center gap-2 text-sm text-gray-600">
             Feature
             <select
@@ -236,6 +239,10 @@ export function MeetingsBoard({
                           </Link>
                         </>
                       ) : null}
+                    </div>
+                    <div className="mt-3 flex max-w-sm items-center gap-3">
+                      <span className="shrink-0 text-xs text-gray-500">Who spoke</span>
+                      <TeamShareBar shares={talkShare[m.id] ?? []} label="Who spoke" />
                     </div>
                   </div>
 

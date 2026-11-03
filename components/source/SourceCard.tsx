@@ -96,7 +96,7 @@ export function SourceCard({
       <div className="space-y-3 px-4 pb-4">
         {source.type === "meeting" ? (
           <>
-            <blockquote className="whitespace-pre-wrap break-words border-l-2 border-accent py-1 pl-4 pr-2 font-display text-lg leading-snug text-gray-900">
+            <blockquote className="whitespace-pre-wrap break-words border-l-2 border-accent py-1 pl-4 pr-2 font-display font-medium text-lg leading-snug text-gray-900">
               {source.excerpt}
             </blockquote>
             <Speaker person={author} team={source.team} />

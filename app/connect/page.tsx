@@ -123,7 +123,7 @@ export default function ConnectPage() {
 
       {/* Team tagging */}
       <section className="mt-10">
-        <h2 className="font-display text-2xl text-gray-900">
+        <h2 className="font-display font-medium text-2xl text-gray-900">
           Tag channels &amp; folders
         </h2>
         <p className="mt-1 mb-4 text-sm text-gray-600">

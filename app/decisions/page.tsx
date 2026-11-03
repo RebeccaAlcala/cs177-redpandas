@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { getDecisions, getFeatures } from "@/lib/data";
-import { PageHeader } from "@/components/ui/PageHeader";
+import { PageHero } from "@/components/ui/PageHero";
 import { EmptyState } from "@/components/ui/EmptyState";
 import { TeamTag } from "@/components/ui/TeamTag";
 import { SourceBadge, FreshnessTag } from "@/components/source";
@@ -16,6 +16,7 @@ export default async function DecisionsPage({ searchParams }: PageProps<"/decisi
   const overturnedOnly = sp.status === "overturned";
 
   const features = getFeatures();
+  const allDecisions = getDecisions();
   const href = (feature: string, overturned: boolean) => {
     const params = new URLSearchParams();
     if (feature) params.set("feature", feature);
@@ -36,10 +37,17 @@ export default async function DecisionsPage({ searchParams }: PageProps<"/decisi
     .filter((g) => g.decisions.length > 0);
 
   return (
-    <main className="mx-auto max-w-6xl px-6 py-12">
-      <PageHeader
+    <main className="mx-auto max-w-6xl px-6 py-8">
+      <PageHero
         title="Decisions"
         subtitle="Every decision per feature, linked to its sources and the discussion behind it."
+        stats={[
+          { label: "Decisions", value: allDecisions.length },
+          {
+            label: "Overturned",
+            value: allDecisions.filter((d) => decisionFreshness(d) === "overturned").length,
+          },
+        ]}
       />
 
       <div className="mb-6 flex flex-wrap items-center gap-2">
@@ -63,14 +71,24 @@ export default async function DecisionsPage({ searchParams }: PageProps<"/decisi
         <div className="space-y-8">
           {groups.map(({ feature, decisions }) => (
             <section key={feature.id}>
-              <h2 className="mb-4 font-display text-2xl text-gray-900">
+              <h2 className="mb-4 font-display font-medium text-2xl text-gray-900">
                 <Link href={`/features/${feature.id}`} className="hover:underline">
                   {feature.name}
                 </Link>
               </h2>
-              <ul className="divide-y divide-gray-100 overflow-hidden rounded-2xl border border-gray-200 bg-white shadow-sm">
-                {decisions.map(({ decision: d, freshness }) => (
-                  <li key={d.id} className="px-6 py-5">
+              <ul className="overflow-hidden rounded-2xl border border-gray-200 bg-white shadow-sm">
+                {decisions.map(({ decision: d, freshness }, i) => (
+                  <li key={d.id} className="relative py-5 pr-6 pl-12">
+                    {/* Timeline rail: newest at the top, joined to the one before it. */}
+                    {i < decisions.length - 1 ? (
+                      <span className="absolute top-8 -bottom-7 left-6 w-px bg-gray-200" aria-hidden />
+                    ) : null}
+                    <span
+                      className={`absolute top-[1.65rem] left-[1.2rem] h-2.5 w-2.5 rounded-full ring-4 ring-white ${
+                        freshness === "overturned" ? "bg-red-500" : "bg-accent"
+                      }`}
+                      aria-hidden
+                    />
                     <div className="flex items-start justify-between gap-4">
                       <p
                         className={`text-base leading-relaxed ${

@@ -62,7 +62,7 @@ export default async function DecisionDetailPage({ params }: PageProps<"/decisio
       />
 
       <Card>
-        <p className="font-display text-2xl leading-snug text-gray-900">{decision.text}</p>
+        <p className="font-display font-medium text-2xl leading-snug text-gray-900">{decision.text}</p>
         <div className="mt-4 flex flex-wrap items-center gap-x-2 gap-y-1.5">
           <span className="mr-1 text-xs text-gray-500">{formatMeetingDate(decision.date)}</span>
           {decision.madeByTeams.map((t) => (
@@ -90,7 +90,7 @@ export default async function DecisionDetailPage({ params }: PageProps<"/decisio
 
       <section className="mt-10">
         <div className="mb-4 flex items-baseline justify-between gap-4">
-          <h2 className="font-display text-2xl text-gray-900">
+          <h2 className="font-display font-medium text-2xl text-gray-900">
             The discussion{meeting ? ` in ${meeting.title}` : ""}
           </h2>
           {meeting ? (

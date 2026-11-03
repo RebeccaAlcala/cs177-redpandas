@@ -4,9 +4,14 @@ import { useState } from "react";
 import Link from "next/link";
 import type { Feature } from "@/lib/types";
 import { EmptyState } from "@/components/ui/EmptyState";
+import { TeamShareBar, type TeamShare } from "@/components/ui/TeamShareBar";
 import { FeatureStatusBadge, STATUS_META } from "./FeatureStatusBadge";
 
-export type FeatureRow = Feature & { meetingCount: number; conflictCount: number };
+export type FeatureRow = Feature & {
+  meetingCount: number;
+  conflictCount: number;
+  teamShare: TeamShare[];
+};
 
 // /features list: search box + status filter over feature cards.
 export function FeatureList({ features }: { features: FeatureRow[] }) {
@@ -58,11 +63,15 @@ export function FeatureList({ features }: { features: FeatureRow[] }) {
                 className="flex h-full flex-col rounded-2xl border border-gray-200 bg-white p-6 shadow-sm transition-shadow hover:shadow-md"
               >
                 <div className="flex items-start justify-between gap-3">
-                  <h2 className="font-display text-2xl leading-tight text-gray-900">{f.name}</h2>
+                  <h2 className="font-display font-medium text-2xl leading-tight text-gray-900">{f.name}</h2>
                   <FeatureStatusBadge status={f.status} />
                 </div>
                 <p className="mt-2 line-clamp-3 text-sm leading-relaxed text-gray-600">{f.description}</p>
-                <div className="mt-auto flex flex-wrap items-center gap-x-3 gap-y-1 pt-5 text-sm text-gray-500">
+                <div className="mt-auto flex items-center gap-3 pt-5">
+                  <span className="shrink-0 text-xs text-gray-500">Claims by team</span>
+                  <TeamShareBar shares={f.teamShare} label="Claims by team" />
+                </div>
+                <div className="mt-3 flex flex-wrap items-center gap-x-3 gap-y-1 text-sm text-gray-500">
                   <span>
                     {f.meetingCount} meeting{f.meetingCount === 1 ? "" : "s"}
                   </span>
