@@ -63,7 +63,7 @@ export function SourcePanel({
     >
       <div
         onClick={onClose}
-        className={`absolute inset-0 bg-black/30 transition-opacity duration-200 ${shown ? "opacity-100" : "opacity-0"}`}
+        className={`absolute inset-0 bg-gray-950/30 backdrop-blur-[2px] transition-opacity duration-200 ${shown ? "opacity-100" : "opacity-0"}`}
       />
       <aside
         role="dialog"
@@ -71,9 +71,9 @@ export function SourcePanel({
         aria-label="Source details"
         className={`absolute right-0 top-0 flex h-full w-full max-w-md flex-col bg-gray-50 shadow-2xl transition-transform duration-200 ${shown ? "translate-x-0" : "translate-x-full"}`}
       >
-        <div className="flex items-center justify-between border-b border-gray-200 bg-white px-4 py-3">
+        <div className="flex items-center justify-between border-b border-gray-200 bg-white px-5 py-4">
           <div>
-            <h2 className="text-sm font-semibold text-gray-900">
+            <h2 className="font-display font-medium text-2xl leading-tight text-gray-900">
               {sourceIds.length === 1 ? "Source" : `Sources (${sourceIds.length})`}
             </h2>
             <p className="text-xs text-gray-500">Where this came from</p>
@@ -83,7 +83,7 @@ export function SourcePanel({
             type="button"
             onClick={onClose}
             aria-label="Close source panel"
-            className="rounded-md p-1.5 text-gray-500 hover:bg-gray-100 hover:text-gray-900"
+            className="rounded-lg p-1.5 text-gray-500 hover:bg-gray-100 hover:text-gray-900"
           >
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2} strokeLinecap="round" className="h-4 w-4" aria-hidden>
               <path d="M6 6l12 12M18 6L6 18" />

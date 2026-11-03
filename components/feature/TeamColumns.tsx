@@ -6,7 +6,7 @@ import type { Claim, TeamId } from "@/lib/types";
 import { EmptyState } from "@/components/ui/EmptyState";
 import { TeamTag } from "@/components/ui/TeamTag";
 import { TEAM_META } from "@/components/ui/teams";
-import { SourceChip } from "./SourceChip";
+import { SourceBadge } from "@/components/source";
 
 type Kind = Claim["kind"];
 
@@ -80,7 +80,7 @@ export function TeamColumns({
                 onClick={() => setKinds((s) => toggle(s, k.id))}
                 className={`rounded-full px-2.5 py-0.5 text-xs font-medium ring-1 ring-inset transition-colors ${
                   on
-                    ? "bg-gray-900 text-white ring-gray-900"
+                    ? "bg-accent text-white ring-accent"
                     : "bg-white text-gray-600 ring-gray-300 hover:bg-gray-50"
                 }`}
               >
@@ -102,7 +102,7 @@ export function TeamColumns({
             return (
               <section
                 key={team}
-                className="flex flex-col rounded-xl border border-gray-200 bg-white shadow-sm"
+                className="flex flex-col rounded-2xl border border-gray-200 bg-white shadow-sm"
               >
                 <header className="flex items-center justify-between border-b border-gray-100 px-4 py-3">
                   <TeamTag team={team} />
@@ -111,7 +111,7 @@ export function TeamColumns({
                   </span>
                 </header>
                 {list.length === 0 ? (
-                  <p className="px-4 py-6 text-center text-xs text-gray-400">
+                  <p className="px-4 py-8 text-center text-sm text-gray-500">
                     Nothing from {TEAM_META[team].name} on this yet.
                   </p>
                 ) : (
@@ -124,7 +124,7 @@ export function TeamColumns({
                           key={c.id}
                           className={`rounded-lg border p-3 ${
                             conflict
-                              ? "border-orange-400 bg-orange-50/60 ring-1 ring-orange-200"
+                              ? "border-orange-200 bg-orange-50"
                               : "border-gray-200"
                           }`}
                         >
@@ -142,7 +142,10 @@ export function TeamColumns({
                                 </Link>
                               </>
                             ) : null}
-                            <SourceChip sourceIds={c.sourceIds} />
+                            <SourceBadge
+                              sourceIds={c.sourceIds}
+                              contradictsSourceId={c.contradictsSourceId}
+                            />
                             {conflict ? (
                               <a
                                 href={`#${conflict.id}`}

@@ -44,7 +44,7 @@ export function TranscriptViewer({
   return (
     <div>
       {highlightSegmentId && !highlightFound ? (
-        <p className="mb-2 rounded-md bg-amber-50 px-3 py-2 text-xs text-amber-800">
+        <p className="mb-2 rounded-lg bg-amber-50 px-3 py-2 text-xs text-amber-800">
           That moment isn&apos;t in this transcript. Showing the full meeting.
         </p>
       ) : null}

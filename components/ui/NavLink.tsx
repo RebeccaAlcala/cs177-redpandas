@@ -11,9 +11,10 @@ export function NavLink({ href, children }: { href: string; children: ReactNode 
   return (
     <Link
       href={href}
-      className={`rounded-md px-3 py-1.5 text-sm font-medium transition-colors ${
+      aria-current={active ? "page" : undefined}
+      className={`rounded-lg px-2 py-1.5 text-[13px] font-medium transition-colors sm:px-3 sm:text-sm ${
         active
-          ? "bg-gray-900 text-white"
+          ? "bg-accent-soft text-accent"
           : "text-gray-600 hover:bg-gray-100 hover:text-gray-900"
       }`}
     >

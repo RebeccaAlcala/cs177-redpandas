@@ -28,7 +28,7 @@ export function RelatedSources({
                 onClick={onNavigate}
                 className="flex items-start gap-2.5 rounded-lg border border-gray-200 bg-white p-2.5 hover:border-gray-300 hover:bg-gray-50"
               >
-                <span className={`mt-0.5 inline-flex h-6 w-6 shrink-0 items-center justify-center rounded-md ring-1 ring-inset ${t.bg} ${t.text} ${t.ring}`}>
+                <span className={`mt-0.5 inline-flex h-6 w-6 shrink-0 items-center justify-center rounded-lg ring-1 ring-inset ${t.bg} ${t.text} ${t.ring}`}>
                   <TypeIcon type={r.type} className="h-3.5 w-3.5" />
                 </span>
                 <span className="min-w-0 flex-1">

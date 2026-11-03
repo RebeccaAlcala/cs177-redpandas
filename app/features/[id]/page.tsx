@@ -13,7 +13,7 @@ import { EmptyState } from "@/components/ui/EmptyState";
 import { PageHeader } from "@/components/ui/PageHeader";
 import { TeamTag } from "@/components/ui/TeamTag";
 import { FeatureStatusBadge } from "@/components/feature/FeatureStatusBadge";
-import { SourceChip } from "@/components/feature/SourceChip";
+import { SourceBadge } from "@/components/source";
 import { TeamColumns, type ConflictRef } from "@/components/feature/TeamColumns";
 
 // The four teams the story map asks for; Product/Growth join only when they said something.
@@ -35,7 +35,7 @@ export default async function FeatureDetailPage({ params }: PageProps<"/features
 
   if (!feature) {
     return (
-      <main className="mx-auto max-w-5xl px-6 py-10">
+      <main className="mx-auto max-w-6xl px-6 py-12">
         <PageHeader title="Feature not found" />
         <EmptyState message="This feature doesn't exist. Go back to the features list." />
         <Link href="/features" className="mt-4 inline-block text-sm text-gray-700 hover:underline">
@@ -62,7 +62,7 @@ export default async function FeatureDetailPage({ params }: PageProps<"/features
   }
 
   return (
-    <main className="mx-auto max-w-5xl px-6 py-10">
+    <main className="mx-auto max-w-6xl px-6 py-12">
       <Link href="/features" className="text-xs text-gray-500 hover:text-gray-800 hover:underline">
         ← All features
       </Link>
@@ -98,7 +98,7 @@ export default async function FeatureDetailPage({ params }: PageProps<"/features
 
         {/* By team */}
         <section>
-          <h2 className="mb-3 text-sm font-semibold text-gray-900">What each team said</h2>
+          <h2 className="mb-4 font-display font-medium text-2xl text-gray-900">What each team said</h2>
           {claims.length === 0 ? (
             <EmptyState message="No team has said anything about this feature yet." />
           ) : (
@@ -114,7 +114,7 @@ export default async function FeatureDetailPage({ params }: PageProps<"/features
         {/* Conflicts */}
         <section>
           <div className="mb-3 flex items-center justify-between">
-            <h2 className="text-sm font-semibold text-gray-900">Conflicts ({conflicts.length})</h2>
+            <h2 className="font-display font-medium text-2xl text-gray-900">Conflicts ({conflicts.length})</h2>
             <Link href="/conflicts" className="text-xs text-gray-600 hover:text-gray-900 hover:underline">
               All conflicts →
             </Link>
@@ -130,10 +130,10 @@ export default async function FeatureDetailPage({ params }: PageProps<"/features
                   <li
                     key={x.id}
                     id={x.id}
-                    className="scroll-mt-6 rounded-xl border border-orange-300 bg-white p-5 shadow-sm"
+                    className="scroll-mt-20 rounded-2xl border border-gray-200 bg-white p-6 shadow-sm"
                   >
                     <div className="flex flex-wrap items-start justify-between gap-3">
-                      <h3 className="text-sm font-semibold text-gray-900">{x.title}</h3>
+                      <h3 className="font-display font-medium text-xl leading-snug text-gray-900">{x.title}</h3>
                       <span className="text-xs text-gray-500">
                         {Math.round(x.confidence * 100)}% confidence
                       </span>
@@ -144,14 +144,17 @@ export default async function FeatureDetailPage({ params }: PageProps<"/features
                         { team: x.teamA, claim: a },
                         { team: x.teamB, claim: b },
                       ].map(({ team, claim }) => (
-                        <div key={team} className="rounded-lg bg-orange-50/60 p-3">
+                        <div key={team} className="rounded-xl bg-gray-50 p-4">
                           <TeamTag team={team} />
                           <p className="mt-2 text-sm text-gray-800">
                             {claim?.text ?? "Claim not found."}
                           </p>
                           {claim ? (
                             <div className="mt-2">
-                              <SourceChip sourceIds={claim.sourceIds} />
+                              <SourceBadge
+                                sourceIds={claim.sourceIds}
+                                contradictsSourceId={claim.contradictsSourceId}
+                              />
                             </div>
                           ) : null}
                         </div>
@@ -167,7 +170,7 @@ export default async function FeatureDetailPage({ params }: PageProps<"/features
         {/* Decisions */}
         <section>
           <div className="mb-3 flex items-center justify-between">
-            <h2 className="text-sm font-semibold text-gray-900">Decisions ({decisions.length})</h2>
+            <h2 className="font-display font-medium text-2xl text-gray-900">Decisions ({decisions.length})</h2>
             <Link href="/decisions" className="text-xs text-gray-600 hover:text-gray-900 hover:underline">
               Decision log →
             </Link>
@@ -175,7 +178,7 @@ export default async function FeatureDetailPage({ params }: PageProps<"/features
           {decisions.length === 0 ? (
             <EmptyState message="No decisions recorded for this feature yet." />
           ) : (
-            <ul className="divide-y divide-gray-100 overflow-hidden rounded-xl border border-gray-200 bg-white shadow-sm">
+            <ul className="divide-y divide-gray-100 overflow-hidden rounded-2xl border border-gray-200 bg-white shadow-sm">
               {decisions.map((d) => (
                 <li key={d.id} className="flex flex-wrap items-center gap-x-4 gap-y-2 px-5 py-3">
                   <Link

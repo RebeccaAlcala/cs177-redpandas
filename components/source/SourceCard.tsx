@@ -12,7 +12,7 @@ function PersonAvatar({ person, square }: { person?: Person; square?: boolean })
   const color = person ? TEAM_META[person.team]?.color : undefined;
   return (
     <span
-      className={`inline-flex h-8 w-8 shrink-0 items-center justify-center text-xs font-semibold text-white ${square ? "rounded-md" : "rounded-full"}`}
+      className={`inline-flex h-8 w-8 shrink-0 items-center justify-center text-xs font-semibold text-white ${square ? "rounded-lg" : "rounded-full"}`}
       style={{ backgroundColor: color ?? "#9ca3af" }}
     >
       {person ? initials(person.name) : "?"}
@@ -21,7 +21,7 @@ function PersonAvatar({ person, square }: { person?: Person; square?: boolean })
 }
 
 const actionCls =
-  "inline-flex items-center gap-1.5 rounded-md bg-gray-900 px-3 py-1.5 text-xs font-medium text-white hover:bg-gray-700";
+  "inline-flex items-center gap-1.5 rounded-lg bg-accent px-3 py-1.5 text-xs font-medium text-white hover:bg-accent-hover";
 
 // "Open in Slack" / "Open in Docs": the URLs are fixtures, so a real link is
 // used when there is one, otherwise a button that does nothing.
@@ -71,7 +71,7 @@ export function SourceCard({
   const channel = source.title.startsWith("#") ? source.title.split(/\s+/)[0] : undefined;
 
   return (
-    <article className="rounded-xl border border-gray-200 bg-white shadow-sm">
+    <article className="rounded-2xl border border-gray-200 bg-white shadow-sm">
       <header className="flex items-start gap-3 p-4 pb-3">
         <span
           className={`mt-0.5 inline-flex h-8 w-8 shrink-0 items-center justify-center rounded-lg ring-1 ring-inset ${type.bg} ${type.text} ${type.ring}`}
@@ -96,7 +96,7 @@ export function SourceCard({
       <div className="space-y-3 px-4 pb-4">
         {source.type === "meeting" ? (
           <>
-            <blockquote className="whitespace-pre-wrap break-words border-l-4 border-violet-300 bg-violet-50/60 py-2 pl-3 pr-2 text-sm text-gray-800">
+            <blockquote className="whitespace-pre-wrap break-words border-l-2 border-accent py-1 pl-4 pr-2 font-display font-medium text-lg leading-snug text-gray-900">
               {source.excerpt}
             </blockquote>
             <Speaker person={author} team={source.team} />
@@ -120,7 +120,7 @@ export function SourceCard({
                   <span className="text-sm font-bold text-gray-900">
                     {author?.name ?? "Unknown user"}
                   </span>
-                  <span className="text-[11px] text-gray-400">
+                  <span className="text-[11px] text-gray-500">
                     {formatSourceDate(source.date, true)}
                   </span>
                   {source.team ?? author?.team ? (
@@ -137,7 +137,7 @@ export function SourceCard({
 
         {source.type === "doc" ? (
           <div className="rounded-lg border border-gray-200 bg-white px-4 py-3 shadow-inner">
-            <div className="mb-2 flex items-center justify-between text-[11px] text-gray-400">
+            <div className="mb-2 flex items-center justify-between text-[11px] text-gray-500">
               <span className="font-medium text-gray-500">{source.title}</span>
               {source.version ? <span>{source.version}</span> : null}
             </div>
@@ -146,7 +146,7 @@ export function SourceCard({
               <div className="h-1.5 w-4/5 rounded bg-gray-100" />
             </div>
             <p className="my-3 whitespace-pre-wrap break-words text-sm leading-relaxed text-gray-900">
-              <mark className="rounded bg-yellow-200 px-0.5 py-0.5 box-decoration-clone">
+              <mark className="rounded bg-amber-100 px-0.5 py-0.5 text-gray-900 box-decoration-clone">
                 {source.excerpt}
               </mark>
             </p>

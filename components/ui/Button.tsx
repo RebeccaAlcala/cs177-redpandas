@@ -1,14 +1,16 @@
 import type { ReactNode } from "react";
 import Link from "next/link";
 
-type Variant = "primary" | "secondary";
+type Variant = "primary" | "secondary" | "inverse" | "ghost";
 
 const base =
-  "inline-flex items-center justify-center rounded-md px-4 py-2 text-sm font-medium transition-colors disabled:opacity-50 disabled:pointer-events-none";
+  "inline-flex items-center justify-center rounded-lg px-4 py-2.5 text-sm font-medium transition-colors disabled:opacity-50 disabled:pointer-events-none";
 
 const variants: Record<Variant, string> = {
-  primary: "bg-gray-900 text-white hover:bg-gray-800",
-  secondary: "border border-gray-300 bg-white text-gray-800 hover:bg-gray-50",
+  primary: "bg-accent text-white hover:bg-accent-hover",
+  secondary: "border border-gray-300 bg-white text-gray-800 hover:bg-gray-100",
+  inverse: "bg-white text-gray-900 hover:bg-gray-100",
+  ghost: "border border-white/25 text-white hover:bg-white/10",
 };
 
 // Simple shared Button. Renders a Next <Link> when `href` is given, otherwise

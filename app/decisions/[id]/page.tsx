@@ -24,7 +24,7 @@ export default async function DecisionDetailPage({ params }: PageProps<"/decisio
 
   if (!decision) {
     return (
-      <main className="mx-auto max-w-3xl px-6 py-10">
+      <main className="mx-auto max-w-3xl px-6 py-12">
         <PageHeader title="Decision not found" />
         <EmptyState message={`We couldn't find a decision with id "${id}".`} />
         <div className="mt-6">
@@ -48,7 +48,7 @@ export default async function DecisionDetailPage({ params }: PageProps<"/decisio
       : [];
 
   return (
-    <main className="mx-auto max-w-3xl px-6 py-10">
+    <main className="mx-auto max-w-3xl px-6 py-12">
       <Link
         href="/decisions"
         className="mb-4 inline-block text-sm text-gray-500 hover:text-gray-900"
@@ -62,8 +62,8 @@ export default async function DecisionDetailPage({ params }: PageProps<"/decisio
       />
 
       <Card>
-        <p className="text-base font-medium text-gray-900">{decision.text}</p>
-        <div className="mt-3 flex flex-wrap items-center gap-x-2 gap-y-1.5">
+        <p className="font-display font-medium text-2xl leading-snug text-gray-900">{decision.text}</p>
+        <div className="mt-4 flex flex-wrap items-center gap-x-2 gap-y-1.5">
           <span className="mr-1 text-xs text-gray-500">{formatMeetingDate(decision.date)}</span>
           {decision.madeByTeams.map((t) => (
             <TeamTag key={t} team={t} />
@@ -74,7 +74,7 @@ export default async function DecisionDetailPage({ params }: PageProps<"/decisio
       </Card>
 
       {laterDecisions.length > 0 ? (
-        <div className="mt-4 rounded-xl border border-red-200 bg-red-50 p-4 text-sm text-red-900">
+        <div className="mt-4 rounded-2xl border border-red-200 bg-red-50 p-5 text-sm text-red-900">
           <p className="font-medium">This decision was overturned. Later on this feature:</p>
           <ul className="mt-1 space-y-1">
             {laterDecisions.map((d) => (
@@ -88,9 +88,9 @@ export default async function DecisionDetailPage({ params }: PageProps<"/decisio
         </div>
       ) : null}
 
-      <section className="mt-8">
-        <div className="mb-3 flex items-center justify-between gap-4">
-          <h2 className="text-sm font-semibold text-gray-900">
+      <section className="mt-10">
+        <div className="mb-4 flex items-baseline justify-between gap-4">
+          <h2 className="font-display font-medium text-2xl text-gray-900">
             The discussion{meeting ? ` in ${meeting.title}` : ""}
           </h2>
           {meeting ? (
@@ -106,7 +106,7 @@ export default async function DecisionDetailPage({ params }: PageProps<"/decisio
         {discussion.length === 0 ? (
           <EmptyState message="No recorded discussion is linked to this decision." />
         ) : (
-          <ol className="divide-y divide-gray-100 overflow-hidden rounded-xl border border-gray-200 bg-white shadow-sm">
+          <ol className="divide-y divide-gray-100 overflow-hidden rounded-2xl border border-gray-200 bg-white shadow-sm">
             {discussion.map((segment) => {
               const speaker = getPerson(segment.speakerId);
               return (

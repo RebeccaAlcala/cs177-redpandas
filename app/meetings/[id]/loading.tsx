@@ -2,7 +2,7 @@
 export default function MeetingDetailLoading() {
   return (
     <main
-      className="mx-auto max-w-5xl animate-pulse px-6 py-10"
+      className="mx-auto max-w-6xl animate-pulse px-6 py-12"
       aria-busy="true"
       aria-label="Loading meeting"
     >
@@ -13,7 +13,7 @@ export default function MeetingDetailLoading() {
       </div>
 
       <div className="grid items-start gap-6 lg:grid-cols-[minmax(0,1fr)_22rem]">
-        <div className="rounded-xl border border-gray-200 bg-white p-4 shadow-sm">
+        <div className="rounded-2xl border border-gray-200 bg-white p-4 shadow-sm">
           <div className="mb-4 h-4 w-24 rounded bg-gray-200" />
           {[0, 1, 2, 3, 4].map((i) => (
             <div key={i} className="flex gap-3 py-3">
@@ -27,7 +27,7 @@ export default function MeetingDetailLoading() {
         </div>
         <div className="space-y-4">
           {[0, 1].map((i) => (
-            <div key={i} className="rounded-xl border border-gray-200 bg-white p-5 shadow-sm">
+            <div key={i} className="rounded-2xl border border-gray-200 bg-white p-5 shadow-sm">
               <div className="mb-3 h-4 w-28 rounded bg-gray-200" />
               <div className="space-y-2">
                 <div className="h-3 w-full rounded bg-gray-100" />

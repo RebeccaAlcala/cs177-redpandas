@@ -6,9 +6,9 @@ export const TYPE_META: Record<
   SourceType,
   { label: string; text: string; bg: string; ring: string }
 > = {
-  meeting: { label: "Meeting", text: "text-violet-700", bg: "bg-violet-50", ring: "ring-violet-200" },
-  slack: { label: "Slack", text: "text-fuchsia-800", bg: "bg-fuchsia-50", ring: "ring-fuchsia-200" },
-  doc: { label: "Doc", text: "text-blue-700", bg: "bg-blue-50", ring: "ring-blue-200" },
+  meeting: { label: "Meeting", text: "text-accent", bg: "bg-accent-soft", ring: "ring-accent/20" },
+  slack: { label: "Slack", text: "text-rose-800", bg: "bg-rose-50", ring: "ring-rose-200" },
+  doc: { label: "Doc", text: "text-sky-800", bg: "bg-sky-50", ring: "ring-sky-200" },
 };
 
 const ICONS: Record<SourceType | "generic", ReactElement> = {
