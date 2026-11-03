@@ -5,7 +5,59 @@
     "date": "2026-10-14T17:00:00.000Z",
     "durationMin": 30,
     "featureId": "f_data_export",
-    "attendeeIds": ["p_maya", "p_sana", "p_leo"],
+    "attendeeIds": [
+      "p_maya",
+      "p_sana",
+      "p_ines",
+      "p_leo"
+    ],
+    "recordingStatus": "recorded"
+  },
+  {
+    "id": "m_002",
+    "title": "Identity checks pilot readiness",
+    "date": "2026-10-19T16:00:00.000Z",
+    "durationMin": 45,
+    "featureId": "f_auto_kyc",
+    "attendeeIds": [
+      "p_maya",
+      "p_rafael",
+      "p_dana",
+      "p_yuki",
+      "p_owen",
+      "p_amir"
+    ],
+    "recordingStatus": "recorded"
+  },
+  {
+    "id": "m_003",
+    "title": "Enterprise SSO kickoff",
+    "date": "2026-10-21T15:00:00.000Z",
+    "durationMin": 30,
+    "featureId": "f_sso_login",
+    "attendeeIds": [
+      "p_maya",
+      "p_amir",
+      "p_kira",
+      "p_jess",
+      "p_ben",
+      "p_nina"
+    ],
+    "recordingStatus": "recorded"
+  },
+  {
+    "id": "m_004",
+    "title": "Enterprise SSO: pen test review",
+    "date": "2026-10-28T16:00:00.000Z",
+    "durationMin": 40,
+    "featureId": "f_sso_login",
+    "attendeeIds": [
+      "p_maya",
+      "p_amir",
+      "p_kira",
+      "p_jess",
+      "p_nina"
+    ],
     "recordingStatus": "recorded"
   }
 ]

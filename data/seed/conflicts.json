@@ -11,7 +11,54 @@
     "confidence": 0.82,
     "suggestedQuestions": [
       "Does \"customer data\" in the export include derived analytics?",
-      "What is the Eng estimate under each definition?"
+      "What is the Eng estimate under each definition?",
+      "Does a partial first release satisfy Privacy Policy v3?"
+    ]
+  },
+  {
+    "id": "x_002",
+    "featureId": "f_auto_kyc",
+    "title": "Risk requires a 2% false-positive threshold, but Eng built to 5%",
+    "teamA": "risk",
+    "teamB": "eng",
+    "claimAId": "c_008",
+    "claimBId": "c_009",
+    "explanation": "Eng followed the KYC Vendor Integration Spec v1 from April. Risk Policy v4 tightened the threshold to 2% in September, and the spec was never updated.",
+    "confidence": 0.96,
+    "suggestedQuestions": [
+      "Who updates the vendor spec to match Risk Policy v4?",
+      "Can the retuned model be tested before the pilot date?",
+      "How should policy changes reach Eng in the future?"
+    ]
+  },
+  {
+    "id": "x_003",
+    "featureId": "f_auto_kyc",
+    "title": "Security and Risk disagree on how long to keep ID images",
+    "teamA": "security",
+    "teamB": "risk",
+    "claimAId": "c_011",
+    "claimBId": "c_012",
+    "explanation": "The retention standard allows 90 days for government ID images. Risk wants 24 months for appeals and fraud tuning, and no exception has been approved.",
+    "confidence": 0.71,
+    "suggestedQuestions": [
+      "Can Risk review appeals with a redacted image or a stored match result?",
+      "Who approves a retention exception?"
+    ]
+  },
+  {
+    "id": "x_004",
+    "featureId": "f_sso_login",
+    "title": "Security requires MFA while Growth wants frictionless signup",
+    "teamA": "security",
+    "teamB": "growth",
+    "claimAId": "c_014",
+    "claimBId": "c_015",
+    "explanation": "The Oct 28 decision settles MFA for workspaces that enable SSO, but the Enterprise Security Baseline and the Growth Q4 Plan still set opposing rules for the rest of signup.",
+    "confidence": 0.58,
+    "suggestedQuestions": [
+      "Does the baseline apply to enterprise trials that have not enabled SSO?",
+      "What does the funnel data actually show about MFA drop-off?"
     ]
   }
 ]

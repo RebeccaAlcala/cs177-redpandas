@@ -2,12 +2,119 @@
   {
     "id": "d_001",
     "featureId": "f_data_export",
-    "text": "Export scope will follow the Compliance definition: include derived and analytics data.",
-    "date": "2026-10-14T17:28:00.000Z",
-    "madeByTeams": ["product", "compliance"],
-    "claimId": "c_001",
-    "sourceIds": ["src_001"],
+    "text": "Hold the export estimate until Product and Compliance agree on one definition of \"customer data\". Eng sizes both scopes in the meantime.",
+    "date": "2026-10-14T17:07:46.000Z",
+    "madeByTeams": [
+      "product",
+      "compliance",
+      "eng"
+    ],
+    "claimId": "c_004",
+    "sourceIds": [
+      "src_005"
+    ],
     "whyMeetingId": "m_001",
-    "whySegmentIds": ["m_001_s001", "m_001_s002"]
+    "whySegmentIds": [
+      "m_001_s001",
+      "m_001_s002",
+      "m_001_s004",
+      "m_001_s007",
+      "m_001_s008"
+    ]
+  },
+  {
+    "id": "d_002",
+    "featureId": "f_data_export",
+    "text": "If profile fields ship first, the release is labeled a partial export and can't be used to answer data subject requests.",
+    "date": "2026-10-16T19:05:00.000Z",
+    "madeByTeams": [
+      "product",
+      "compliance"
+    ],
+    "claimId": "c_007",
+    "sourceIds": [
+      "src_009",
+      "src_010"
+    ],
+    "whyMeetingId": "m_001",
+    "whySegmentIds": [
+      "m_001_s005",
+      "m_001_s006"
+    ]
+  },
+  {
+    "id": "d_003",
+    "featureId": "f_auto_kyc",
+    "text": "The identity checks pilot is on hold until Eng retunes the match model to the 2% false-positive threshold and a new test run is in.",
+    "date": "2026-10-19T16:09:30.000Z",
+    "madeByTeams": [
+      "risk",
+      "eng",
+      "product"
+    ],
+    "claimId": "c_013",
+    "sourceIds": [
+      "src_020",
+      "src_021"
+    ],
+    "whyMeetingId": "m_002",
+    "whySegmentIds": [
+      "m_002_s002",
+      "m_002_s004",
+      "m_002_s005",
+      "m_002_s006",
+      "m_002_s007",
+      "m_002_s011"
+    ]
+  },
+  {
+    "id": "d_004",
+    "featureId": "f_sso_login",
+    "text": "MFA is optional during trials, to be revisited after the pen test.",
+    "date": "2026-10-21T15:06:12.000Z",
+    "madeByTeams": [
+      "product",
+      "growth",
+      "security"
+    ],
+    "claimId": "c_017",
+    "sourceIds": [
+      "src_026",
+      "src_027"
+    ],
+    "whyMeetingId": "m_003",
+    "whySegmentIds": [
+      "m_003_s002",
+      "m_003_s003",
+      "m_003_s004",
+      "m_003_s008",
+      "m_003_s009"
+    ]
+  },
+  {
+    "id": "d_005",
+    "featureId": "f_sso_login",
+    "text": "MFA is required before any workspace enables SSO, trials included. Email-only trial signups are unchanged.",
+    "date": "2026-10-28T16:06:06.000Z",
+    "madeByTeams": [
+      "product",
+      "security",
+      "eng",
+      "growth"
+    ],
+    "claimId": "c_019",
+    "sourceIds": [
+      "src_030",
+      "src_031"
+    ],
+    "whyMeetingId": "m_004",
+    "whySegmentIds": [
+      "m_004_s002",
+      "m_004_s003",
+      "m_004_s004",
+      "m_004_s005",
+      "m_004_s006",
+      "m_004_s008"
+    ]
   }
 ]
