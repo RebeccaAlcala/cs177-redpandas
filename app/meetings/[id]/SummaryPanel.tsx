@@ -32,7 +32,7 @@ export function SummaryPanel({ meetingId }: { meetingId: string }) {
           {conflicts.map((x) => (
             <Link
               key={x.id}
-              href="/conflicts"
+              href={`/conflicts#${x.id}`}
               className="block rounded-2xl border border-orange-200 bg-orange-50 p-5 transition-colors hover:bg-orange-100/70"
             >
               <div className="flex items-center gap-2 text-xs font-semibold text-orange-800">

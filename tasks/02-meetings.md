@@ -11,8 +11,8 @@
 - [x] Support a URL param like `?segment=m_001_s014` so links can jump straight to a moment
 
 ## Phase 2: Sat
-- [ ] Replace placeholder chips with `<SourceBadge sourceIds=... />` from #5
-- [x] Show conflict callouts inside the summary (use `conflictIds`, link to `/conflicts`)
+- [x] Replace placeholder chips with `<SourceBadge sourceIds=... />` from #5
+- [x] Show conflict callouts inside the summary (use `conflictIds`, link to `/conflicts#<conflictId>`)
 - [x] Highlight confusion/term annotations (e.g. "what Compliance means by 'customer data'") inline in the transcript if time allows
 
 ## Phase 3: Sun
