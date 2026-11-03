@@ -6,7 +6,7 @@ import { NavLink } from "./NavLink";
 export function SiteHeader() {
   return (
     <header className="sticky top-0 z-40 border-b border-gray-200 bg-background/85 backdrop-blur">
-      <div className="mx-auto flex max-w-6xl items-center justify-between gap-2 px-4 py-3 sm:px-6">
+      <div className="flex items-center justify-between gap-2 px-4 py-3 sm:px-6">
         <Link href="/" aria-label="Meeting Source Tracer home" className="flex items-center gap-2.5">
           {/* A claim connected back to its source. */}
           <span className="flex h-7 w-7 items-center justify-center rounded-lg bg-accent text-white">
