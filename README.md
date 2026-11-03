@@ -36,3 +36,25 @@ npm run dev
 ```
 
 Then open http://localhost:3000.
+
+To check the production build before deploying:
+
+```bash
+npm run build
+```
+
+## Deploy (Vercel)
+
+The app is a standard Next.js App Router project, so Vercel deploys it with no
+config. Deploy from the GitHub repo so every push to `main` redeploys:
+
+1. Go to https://vercel.com/new and sign in with GitHub.
+2. Import `RebeccaAlcala/cs177-redpandas`.
+3. Framework preset auto-detects **Next.js** — leave the build command
+   (`next build`) and output settings at their defaults.
+4. No environment variables are needed (all data is mocked JSON in the repo).
+5. Click **Deploy**. Vercel builds it and gives you a live URL like
+   `https://cs177-redpandas.vercel.app`.
+
+After that first import, every push to `main` auto-deploys, and each PR gets its
+own preview URL. Share the live URL in the team chat for the demo.
