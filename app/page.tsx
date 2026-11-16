@@ -53,8 +53,8 @@ export default function HomePage() {
               and traces every claim back to its source.
             </p>
             <div className="mt-9 flex flex-wrap items-center justify-center gap-3">
-              <Button href="/connect" variant="inverse">
-                Sign in with company SSO
+              <Button href="/login" variant="inverse">
+                Sign in to try it
               </Button>
               <Button href="/meetings" variant="ghost">
                 View the demo
@@ -140,8 +140,8 @@ export default function HomePage() {
               Stop being the search engine between teams.
             </h2>
             <div className="mt-9 flex justify-center">
-              <Button href="/connect" variant="inverse">
-                Sign in with company SSO
+              <Button href="/login" variant="inverse">
+                Sign in to try it
               </Button>
             </div>
           </div>
