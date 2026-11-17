@@ -5,7 +5,7 @@ import Link from "next/link";
 import { Button } from "@/components/ui/Button";
 import { AnalysisView } from "@/components/record/AnalysisView";
 import type { LiveAnalysis } from "@/lib/ai/analysis-types";
-import { saveMeeting, newMeetingId } from "@/lib/local-meetings";
+import { saveMeeting, newMeetingId, loadMeetings } from "@/lib/local-meetings";
 
 // Minimal typing for the Web Speech API (not in the TS DOM lib).
 type SpeechResult = { 0: { transcript: string }; isFinal: boolean };
@@ -167,10 +167,19 @@ export default function RecordPage() {
     }
     setLoading(true);
     try {
+      // Send earlier recordings as context so the AI can catch contradictions
+      // with prior meetings and cite which meeting the earlier claim came from.
+      const priorMeetings = loadMeetings()
+        .slice(0, 8)
+        .map((m) => ({
+          title: m.title,
+          summaryPoints: m.analysis.summaryPoints,
+          transcript: m.transcript,
+        }));
       const res = await fetch("/api/analyze", {
         method: "POST",
         headers: { "content-type": "application/json" },
-        body: JSON.stringify({ transcript, title }),
+        body: JSON.stringify({ transcript, title, priorMeetings }),
       });
       const data = (await res.json()) as { analysis?: LiveAnalysis; error?: string };
       if (!res.ok || !data.analysis) {

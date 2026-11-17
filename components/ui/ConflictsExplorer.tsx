@@ -38,6 +38,7 @@ interface RecordedConflictView {
   quoteA?: string;
   quoteB?: string;
   meetingTitle: string;
+  sourceMeeting?: string; // earlier meeting this contradicts, if any
 }
 
 // Sensitivity stops. `min` is the significance a conflict must reach to be shown.
@@ -150,6 +151,7 @@ export function ConflictsExplorer({
           quoteA: c.quoteA,
           quoteB: c.quoteB,
           meetingTitle: m.title,
+          sourceMeeting: c.sourceMeeting,
         });
       });
     }
@@ -331,9 +333,14 @@ export function ConflictsExplorer({
                       </div>
                     ) : null}
                     <p className="mt-4 text-sm leading-relaxed text-gray-700">{r.explanation}</p>
+                    {r.sourceMeeting ? (
+                      <p className="mt-3 inline-flex items-center gap-1 rounded-full bg-white px-2.5 py-0.5 text-xs font-medium text-orange-800 ring-1 ring-inset ring-orange-200">
+                        ↳ Contradicts an earlier meeting: {r.sourceMeeting}
+                      </p>
+                    ) : null}
                     <Link
                       href="/my-meetings"
-                      className="mt-3 inline-block text-xs text-gray-500 hover:text-gray-900 hover:underline"
+                      className="mt-3 block text-xs text-gray-500 hover:text-gray-900 hover:underline"
                     >
                       From your recording: {r.meetingTitle} →
                     </Link>

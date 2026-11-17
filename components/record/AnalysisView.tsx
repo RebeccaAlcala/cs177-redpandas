@@ -89,6 +89,11 @@ export function AnalysisView({ analysis }: { analysis: LiveAnalysis }) {
                     ) : null}
                   </div>
                 ) : null}
+                {c.sourceMeeting ? (
+                  <p className="mt-3 inline-flex items-center gap-1 rounded-full bg-white px-2.5 py-0.5 text-xs font-medium text-red-700 ring-1 ring-inset ring-red-200">
+                    ↳ Contradicts an earlier meeting: {c.sourceMeeting}
+                  </p>
+                ) : null}
               </li>
             ))}
           </ul>
