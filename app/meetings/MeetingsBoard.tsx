@@ -20,7 +20,10 @@ type Local = {
   autoJoin: Record<string, boolean>;
 };
 
-const STORAGE_KEY = "mst.meetings.v1";
+// NOTE: must NOT collide with lib/local-meetings.ts ("mst.meetings.v1"), which
+// stores the user's recorded meetings. Sharing a key wiped those recordings
+// whenever this board mounted.
+const STORAGE_KEY = "mst.board-overrides.v1";
 const EMPTY: Local = { status: {}, feature: {}, autoJoin: {} };
 
 export function MeetingsBoard({
