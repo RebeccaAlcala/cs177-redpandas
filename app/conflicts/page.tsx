@@ -7,14 +7,19 @@ import { EmptyState } from "@/components/ui/EmptyState";
 import { TeamTag } from "@/components/ui/TeamTag";
 import { TEAM_IDS, TEAM_META } from "@/components/ui/teams";
 import { SourceBadge } from "@/components/source";
+import { ImportDemoBar } from "@/components/ui/ImportDemoBar";
+import { RecordedConflicts } from "@/components/ui/RecordedConflicts";
+import { isDemoImported } from "@/lib/demo";
 import { FilterPill } from "../decisions/FilterPill";
 
-// /conflicts: cross-team conflicts, highest confidence first.
-// Supports ?feature=f_data_export and ?team=risk.
+// /conflicts: conflicts from your own recordings on top, then the sample backlog
+// (opt-in via "Import meeting data"). Supports ?feature=f_data_export and ?team=risk.
 export default async function ConflictsPage({ searchParams }: PageProps<"/conflicts">) {
   const sp = await searchParams;
   const featureId = typeof sp.feature === "string" ? sp.feature : "";
   const team = typeof sp.team === "string" ? (sp.team as TeamId) : "";
+  const imported = await isDemoImported();
+  const features = imported ? getFeatures() : [];
 
   const href = (nextFeature: string, nextTeam: string) => {
     const params = new URLSearchParams();
@@ -24,7 +29,7 @@ export default async function ConflictsPage({ searchParams }: PageProps<"/confli
     return query ? `/conflicts?${query}` : "/conflicts";
   };
 
-  const all = getConflicts();
+  const all = imported ? getConflicts() : [];
   const teamsInConflict = TEAM_IDS.filter((t) => all.some((x) => x.teamA === t || x.teamB === t));
   const conflicts = all
     .filter((x) => !featureId || x.featureId === featureId)
@@ -42,30 +47,38 @@ export default async function ConflictsPage({ searchParams }: PageProps<"/confli
         ]}
       />
 
-      <div className="mb-6 space-y-2">
-        <div className="flex flex-wrap items-center gap-2">
-          <FilterPill href={href("", team)} active={!featureId}>
-            All features
-          </FilterPill>
-          {getFeatures().map((f) => (
-            <FilterPill key={f.id} href={href(f.id, team)} active={featureId === f.id}>
-              {f.name}
-            </FilterPill>
-          ))}
-        </div>
-        <div className="flex flex-wrap items-center gap-2">
-          <FilterPill href={href(featureId, "")} active={!team}>
-            All teams
-          </FilterPill>
-          {teamsInConflict.map((t) => (
-            <FilterPill key={t} href={href(featureId, t)} active={team === t}>
-              {TEAM_META[t].name}
-            </FilterPill>
-          ))}
-        </div>
-      </div>
+      <ImportDemoBar imported={imported} />
 
-      {conflicts.length === 0 ? (
+      <RecordedConflicts />
+
+      {imported ? (
+        <div className="mb-6 space-y-2">
+          <div className="flex flex-wrap items-center gap-2">
+            <FilterPill href={href("", team)} active={!featureId}>
+              All features
+            </FilterPill>
+            {features.map((f) => (
+              <FilterPill key={f.id} href={href(f.id, team)} active={featureId === f.id}>
+                {f.name}
+              </FilterPill>
+            ))}
+          </div>
+          <div className="flex flex-wrap items-center gap-2">
+            <FilterPill href={href(featureId, "")} active={!team}>
+              All teams
+            </FilterPill>
+            {teamsInConflict.map((t) => (
+              <FilterPill key={t} href={href(featureId, t)} active={team === t}>
+                {TEAM_META[t].name}
+              </FilterPill>
+            ))}
+          </div>
+        </div>
+      ) : null}
+
+      {!imported ? (
+        <EmptyState message="No sample conflicts loaded. Click “Import meeting data” above to load the demo backlog. Conflicts found in your own recordings appear at the top." />
+      ) : conflicts.length === 0 ? (
         <EmptyState message="No conflicts match these filters." />
       ) : (
         <ul className="space-y-4">

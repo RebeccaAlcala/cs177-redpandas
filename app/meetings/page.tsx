@@ -2,14 +2,18 @@ import { getFeatures, getMeetings, getPeople, getTranscript } from "@/lib/data";
 import type { TeamId } from "@/lib/types";
 import { PageHero } from "@/components/ui/PageHero";
 import { EmptyState } from "@/components/ui/EmptyState";
+import { ImportDemoBar } from "@/components/ui/ImportDemoBar";
+import { RecordedMeetings } from "@/components/ui/RecordedMeetings";
+import { isDemoImported } from "@/lib/demo";
 import { MeetingsBoard } from "./MeetingsBoard";
 
-// /meetings: auto-join card + list of all meetings, filterable by feature.
-// Supports ?feature=f_data_export so other pages can link to a filtered list.
+// /meetings: your recorded meetings on top, then the sample backlog (opt-in via
+// "Import meeting data"). Filterable by feature; supports ?feature=f_data_export.
 export default async function MeetingsPage({ searchParams }: PageProps<"/meetings">) {
   const sp = await searchParams;
   const feature = typeof sp.feature === "string" ? sp.feature : "";
-  const meetings = getMeetings();
+  const imported = await isDemoImported();
+  const meetings = imported ? getMeetings() : [];
 
   // How much each team spoke in each meeting, by length of what they said.
   const talkShare = Object.fromEntries(
@@ -35,8 +39,13 @@ export default async function MeetingsPage({ searchParams }: PageProps<"/meeting
           { label: "Lines", value: lines },
         ]}
       />
+
+      <ImportDemoBar imported={imported} />
+
+      <RecordedMeetings />
+
       {meetings.length === 0 ? (
-        <EmptyState message="No meetings yet. Connect your calendar to start recording." />
+        <EmptyState message="No sample meetings loaded. Click “Import meeting data” above to load the demo backlog, or record your own on the Record page." />
       ) : (
         <MeetingsBoard
           meetings={meetings}

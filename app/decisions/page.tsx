@@ -5,18 +5,22 @@ import { EmptyState } from "@/components/ui/EmptyState";
 import { TeamTag } from "@/components/ui/TeamTag";
 import { SourceBadge, FreshnessTag } from "@/components/source";
 import { formatMeetingDate } from "@/components/transcript/format";
+import { ImportDemoBar } from "@/components/ui/ImportDemoBar";
+import { isDemoImported } from "@/lib/demo";
 import { FilterPill } from "./FilterPill";
 import { decisionFreshness } from "./freshness";
 
-// /decisions: decision log grouped by feature, newest first.
+// /decisions: decision log grouped by feature, newest first. Opt-in via
+// "Import meeting data" — a live recording produces no decisions of its own.
 // Supports ?feature=f_data_export and ?status=overturned.
 export default async function DecisionsPage({ searchParams }: PageProps<"/decisions">) {
   const sp = await searchParams;
   const featureId = typeof sp.feature === "string" ? sp.feature : "";
   const overturnedOnly = sp.status === "overturned";
 
-  const features = getFeatures();
-  const allDecisions = getDecisions();
+  const imported = await isDemoImported();
+  const features = imported ? getFeatures() : [];
+  const allDecisions = imported ? getDecisions() : [];
   const href = (feature: string, overturned: boolean) => {
     const params = new URLSearchParams();
     if (feature) params.set("feature", feature);
@@ -50,22 +54,28 @@ export default async function DecisionsPage({ searchParams }: PageProps<"/decisi
         ]}
       />
 
-      <div className="mb-6 flex flex-wrap items-center gap-2">
-        <FilterPill href={href("", overturnedOnly)} active={!featureId}>
-          All features
-        </FilterPill>
-        {features.map((f) => (
-          <FilterPill key={f.id} href={href(f.id, overturnedOnly)} active={featureId === f.id}>
-            {f.name}
-          </FilterPill>
-        ))}
-        <span className="mx-1 h-4 w-px bg-gray-300" aria-hidden />
-        <FilterPill href={href(featureId, !overturnedOnly)} active={overturnedOnly}>
-          Overturned only
-        </FilterPill>
-      </div>
+      <ImportDemoBar imported={imported} />
 
-      {groups.length === 0 ? (
+      {imported ? (
+        <div className="mb-6 flex flex-wrap items-center gap-2">
+          <FilterPill href={href("", overturnedOnly)} active={!featureId}>
+            All features
+          </FilterPill>
+          {features.map((f) => (
+            <FilterPill key={f.id} href={href(f.id, overturnedOnly)} active={featureId === f.id}>
+              {f.name}
+            </FilterPill>
+          ))}
+          <span className="mx-1 h-4 w-px bg-gray-300" aria-hidden />
+          <FilterPill href={href(featureId, !overturnedOnly)} active={overturnedOnly}>
+            Overturned only
+          </FilterPill>
+        </div>
+      ) : null}
+
+      {!imported ? (
+        <EmptyState message="No decisions yet. Click “Import meeting data” above to load the demo backlog of decisions." />
+      ) : groups.length === 0 ? (
         <EmptyState message="No decisions match these filters." />
       ) : (
         <div className="space-y-8">
