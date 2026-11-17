@@ -1,14 +1,13 @@
 import type { ReactNode } from "react";
-import { getClaim, getClaims, getPeople, getSources } from "@/lib/data";
+import { getClaim, getPeople, getSources } from "@/lib/data";
 import { Button } from "@/components/ui/Button";
 import { DotField } from "@/components/ui/DotField";
-import { TeamShareBar } from "@/components/ui/TeamShareBar";
-import { TeamTag } from "@/components/ui/TeamTag";
-import { TEAM_IDS } from "@/components/ui/teams";
 import { UnsourcedFlag } from "@/components/source/UnsourcedFlag";
-import { FreshnessTag } from "@/components/source/FreshnessTag";
 import { ProductDemo } from "@/components/landing/ProductDemo";
 import { TraceVisual } from "@/components/landing/TraceVisual";
+import { SignedInHome } from "@/components/landing/SignedInHome";
+import { getSessionUser } from "@/lib/auth";
+import { isDemoImported } from "@/lib/demo";
 
 // The claims the landing visuals are built around, read from the seed data.
 const TRACED_CLAIM_ID = "c_009";
@@ -24,15 +23,16 @@ function Feature({ title, text, children }: { title: string; text: string; child
   );
 }
 
-// Landing + mock SSO sign-in (docs/CONTRACT.md route "/").
-export default function HomePage() {
+// Route "/". Signed-in users get a working home base (SignedInHome); logged-out
+// visitors get the marketing landing below that explains the product.
+export default async function HomePage() {
+  const user = await getSessionUser();
+  if (user) {
+    return <SignedInHome user={user} imported={await isDemoImported()} />;
+  }
+
   const traced = getClaim(TRACED_CLAIM_ID);
   const unsourced = getClaim(UNSOURCED_CLAIM_ID);
-  const claims = getClaims();
-  const claimsByTeam = TEAM_IDS.map((team) => ({
-    team,
-    amount: claims.filter((c) => c.team === team).length,
-  })).filter((s) => s.amount > 0);
 
   return (
     <main>
@@ -88,45 +88,53 @@ export default function HomePage() {
 
       <section className="mx-auto max-w-6xl px-6 pt-20 sm:pt-28">
         <h2 className="reveal max-w-3xl font-display font-medium text-5xl leading-[1.05] tracking-tight text-gray-900 sm:text-6xl">
-          Know what you can repeat as fact.
+          From recording to receipt.
         </h2>
         <div className="mt-10 grid gap-4 md:grid-cols-3">
           <Feature
-            title="Unsourced claims get flagged"
-            text="If nothing backs a claim up, you see that before anyone builds on it."
+            title="Record live, summarized by AI"
+            text="Hit record. When the meeting ends you get a clean summary, action items, and flags — no note-taking."
+          >
+            <div className="w-full space-y-2">
+              <div className="flex items-center gap-2 text-xs font-medium text-red-600">
+                <span className="inline-block h-2 w-2 animate-pulse rounded-full bg-red-500" />
+                Recording
+              </div>
+              <div className="rounded-lg bg-white px-3 py-2 text-sm text-gray-700 shadow-sm">
+                “Let’s lock the export scope this week.”
+              </div>
+              <span className="inline-flex items-center gap-1 rounded-full bg-accent/10 px-2 py-0.5 text-[11px] font-medium text-accent">
+                AI summary ready
+              </span>
+            </div>
+          </Feature>
+          <Feature
+            title="Conflicts, at your sensitivity"
+            text="The AI flags where teams disagree — and you choose how much to surface, from only the clearest to every maybe."
+          >
+            <div className="w-full space-y-3">
+              <div className="inline-flex rounded-lg border border-gray-200 bg-white p-0.5 text-xs">
+                <span className="rounded-md px-2 py-1 text-gray-500">Only significant</span>
+                <span className="rounded-md bg-accent px-2 py-1 font-medium text-white">Balanced</span>
+                <span className="rounded-md px-2 py-1 text-gray-500">Everything</span>
+              </div>
+              <div>
+                <div className="mb-1 text-[11px] text-gray-500">96% confidence</div>
+                <div className="h-1.5 overflow-hidden rounded-full bg-gray-100">
+                  <div className="h-full w-[96%] rounded-full bg-orange-500" />
+                </div>
+              </div>
+            </div>
+          </Feature>
+          <Feature
+            title="Every claim traces to its source"
+            text="Each statement links to the meeting, message, or doc it came from — and anything unsupported gets flagged."
           >
             <p className="text-sm leading-relaxed text-gray-800">
               {unsourced?.text ?? "A claim with no evidence behind it."}
             </p>
             <div className="mt-3">
               <UnsourcedFlag />
-            </div>
-          </Feature>
-          <Feature
-            title="Old answers stay labeled"
-            text="Each source shows whether it's still current, changed, or overturned."
-          >
-            <ul className="space-y-3 text-sm text-gray-800">
-              <li className="flex items-center justify-between gap-3">
-                Risk Policy v4 <FreshnessTag status="current" />
-              </li>
-              <li className="flex items-center justify-between gap-3">
-                Vendor Spec v1 <FreshnessTag status="updated" />
-              </li>
-              <li className="flex items-center justify-between gap-3">
-                Trial MFA call <FreshnessTag status="overturned" />
-              </li>
-            </ul>
-          </Feature>
-          <Feature
-            title="Every team in one view"
-            text="See each team's position on a feature without reading every transcript."
-          >
-            <TeamShareBar shares={claimsByTeam} label="Claims by team" />
-            <div className="mt-4 flex flex-wrap gap-1.5">
-              {claimsByTeam.map((s) => (
-                <TeamTag key={s.team} team={s.team} />
-              ))}
             </div>
           </Feature>
         </div>
