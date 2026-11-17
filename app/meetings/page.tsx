@@ -4,12 +4,31 @@ import { PageHero } from "@/components/ui/PageHero";
 import { EmptyState } from "@/components/ui/EmptyState";
 import { ImportDemoBar } from "@/components/ui/ImportDemoBar";
 import { RecordedMeetings } from "@/components/ui/RecordedMeetings";
+import { FeaturePromo } from "@/components/landing/FeaturePromo";
 import { isDemoImported } from "@/lib/demo";
+import { getSessionUser } from "@/lib/auth";
 import { MeetingsBoard } from "./MeetingsBoard";
 
 // /meetings: your recorded meetings on top, then the sample backlog (opt-in via
 // "Import meeting data"). Filterable by feature; supports ?feature=f_data_export.
+// Logged-out visitors get a promotional explainer instead of the app view.
 export default async function MeetingsPage({ searchParams }: PageProps<"/meetings">) {
+  const user = await getSessionUser();
+  if (!user) {
+    return (
+      <FeaturePromo
+        eyebrow="Meetings"
+        title="Every meeting, on the record."
+        blurb="The recorder joins your calls, captures a team-tagged transcript, and hands back an AI summary with the decisions, action items, and anything said without a source."
+        points={[
+          { title: "Auto-join & record", text: "The bot joins from your calendar and records, so no one has to take notes." },
+          { title: "Team-tagged transcript", text: "Every line is attributed, so you can see which team said what, and how much." },
+          { title: "AI summary", text: "Key decisions, numbers, and action items pulled out the moment the meeting ends." },
+        ]}
+      />
+    );
+  }
+
   const sp = await searchParams;
   const feature = typeof sp.feature === "string" ? sp.feature : "";
   const imported = await isDemoImported();
