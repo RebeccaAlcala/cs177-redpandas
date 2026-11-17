@@ -1,173 +1,71 @@
-import Link from "next/link";
-import type { TeamId } from "@/lib/types";
 import { getClaim, getConflicts, getFeature, getFeatures } from "@/lib/data";
-import { Fragment } from "react";
 import { PageHero } from "@/components/ui/PageHero";
-import { EmptyState } from "@/components/ui/EmptyState";
-import { TeamTag } from "@/components/ui/TeamTag";
-import { TEAM_IDS, TEAM_META } from "@/components/ui/teams";
-import { SourceBadge } from "@/components/source";
 import { ImportDemoBar } from "@/components/ui/ImportDemoBar";
-import { RecordedConflicts } from "@/components/ui/RecordedConflicts";
+import {
+  ConflictsExplorer,
+  type SeedConflictView,
+} from "@/components/ui/ConflictsExplorer";
 import { isDemoImported } from "@/lib/demo";
-import { FilterPill } from "../decisions/FilterPill";
 
-// /conflicts: conflicts from your own recordings on top, then the sample backlog
-// (opt-in via "Import meeting data"). Supports ?feature=f_data_export and ?team=risk.
+// /conflicts: an interactive conflict list. Conflicts from the user's own
+// recordings sit on top of the sample backlog (opt-in via "Import meeting data").
+// A sensitivity control lets the reader choose how many potential conflicts to
+// surface, and each one can be dismissed as a false positive ("Not a conflict").
+// Supports ?feature=f_data_export and ?team=risk as the initial filter.
 export default async function ConflictsPage({ searchParams }: PageProps<"/conflicts">) {
   const sp = await searchParams;
-  const featureId = typeof sp.feature === "string" ? sp.feature : "";
-  const team = typeof sp.team === "string" ? (sp.team as TeamId) : "";
+  const initialFeatureId = typeof sp.feature === "string" ? sp.feature : "";
+  const initialTeam = typeof sp.team === "string" ? sp.team : "";
   const imported = await isDemoImported();
-  const features = imported ? getFeatures() : [];
 
-  const href = (nextFeature: string, nextTeam: string) => {
-    const params = new URLSearchParams();
-    if (nextFeature) params.set("feature", nextFeature);
-    if (nextTeam) params.set("team", nextTeam);
-    const query = params.toString();
-    return query ? `/conflicts?${query}` : "/conflicts";
-  };
+  // Resolve seed conflicts into a serializable shape the client explorer can
+  // render (claim text + source ids, so SourceBadge works client-side).
+  const seedConflicts: SeedConflictView[] = (imported ? getConflicts() : []).map((x) => {
+    const claimA = getClaim(x.claimAId);
+    const claimB = getClaim(x.claimBId);
+    const feature = getFeature(x.featureId);
+    return {
+      id: x.id,
+      title: x.title,
+      significance: x.confidence,
+      explanation: x.explanation,
+      featureId: feature?.id,
+      featureName: feature?.name,
+      suggestedQuestions: x.suggestedQuestions,
+      sideA: {
+        teamId: x.teamA,
+        claimText: claimA?.text ?? "",
+        sourceIds: claimA?.sourceIds ?? [],
+        contradictsSourceId: claimA?.contradictsSourceId,
+      },
+      sideB: {
+        teamId: x.teamB,
+        claimText: claimB?.text ?? "",
+        sourceIds: claimB?.sourceIds ?? [],
+        contradictsSourceId: claimB?.contradictsSourceId,
+      },
+    };
+  });
 
-  const all = imported ? getConflicts() : [];
-  const teamsInConflict = TEAM_IDS.filter((t) => all.some((x) => x.teamA === t || x.teamB === t));
-  const conflicts = all
-    .filter((x) => !featureId || x.featureId === featureId)
-    .filter((x) => !team || x.teamA === team || x.teamB === team)
-    .sort((a, b) => b.confidence - a.confidence);
+  const featureOptions = (imported ? getFeatures() : []).map((f) => ({ id: f.id, name: f.name }));
 
   return (
     <main className="mx-auto max-w-6xl px-6 py-8">
       <PageHero
         title="Conflicts"
-        subtitle="Where teams contradict each other, with the evidence on both sides. Highest confidence first."
-        stats={[
-          { label: "Open", value: all.length },
-          { label: "Teams involved", value: teamsInConflict.length },
-        ]}
+        subtitle="Where teams contradict each other, with the evidence on both sides. Tune the sensitivity, and dismiss anything that isn't a real disagreement."
+        stats={[{ label: "In backlog", value: seedConflicts.length }]}
       />
 
       <ImportDemoBar imported={imported} />
 
-      <RecordedConflicts />
-
-      {imported ? (
-        <div className="mb-6 space-y-2">
-          <div className="flex flex-wrap items-center gap-2">
-            <FilterPill href={href("", team)} active={!featureId}>
-              All features
-            </FilterPill>
-            {features.map((f) => (
-              <FilterPill key={f.id} href={href(f.id, team)} active={featureId === f.id}>
-                {f.name}
-              </FilterPill>
-            ))}
-          </div>
-          <div className="flex flex-wrap items-center gap-2">
-            <FilterPill href={href(featureId, "")} active={!team}>
-              All teams
-            </FilterPill>
-            {teamsInConflict.map((t) => (
-              <FilterPill key={t} href={href(featureId, t)} active={team === t}>
-                {TEAM_META[t].name}
-              </FilterPill>
-            ))}
-          </div>
-        </div>
-      ) : null}
-
-      {!imported ? (
-        <EmptyState message="No sample conflicts loaded. Click “Import meeting data” above to load the demo backlog. Conflicts found in your own recordings appear at the top." />
-      ) : conflicts.length === 0 ? (
-        <EmptyState message="No conflicts match these filters." />
-      ) : (
-        <ul className="space-y-4">
-          {conflicts.map((x) => {
-            const feature = getFeature(x.featureId);
-            const confidence = Math.round(x.confidence * 100);
-            const sides = [
-              { team: x.teamA, claim: getClaim(x.claimAId) },
-              { team: x.teamB, claim: getClaim(x.claimBId) },
-            ];
-            return (
-              <li
-                key={x.id}
-                id={x.id}
-                className="scroll-mt-20 rounded-2xl border border-gray-200 bg-white p-6 shadow-sm"
-              >
-                <div className="flex flex-wrap items-start justify-between gap-x-6 gap-y-3">
-                  <div className="min-w-0 flex-1 basis-64">
-                    <h2 className="font-display font-medium text-2xl leading-snug text-gray-900">{x.title}</h2>
-                    {feature ? (
-                      <Link
-                        href={`/features/${feature.id}`}
-                        className="mt-0.5 inline-block text-xs text-gray-500 hover:text-gray-900 hover:underline"
-                      >
-                        {feature.name} →
-                      </Link>
-                    ) : null}
-                  </div>
-                  <div className="w-40 shrink-0">
-                    <div className="mb-1 text-xs text-gray-600">{confidence}% confidence</div>
-                    <div
-                      role="meter"
-                      aria-label="Confidence"
-                      aria-valuemin={0}
-                      aria-valuemax={100}
-                      aria-valuenow={confidence}
-                      className="h-1.5 overflow-hidden rounded-full bg-gray-100"
-                    >
-                      <div
-                        className="h-full rounded-full bg-orange-500"
-                        style={{ width: `${confidence}%` }}
-                      />
-                    </div>
-                  </div>
-                </div>
-
-                <div className="mt-4 grid items-stretch gap-2 md:grid-cols-[1fr_auto_1fr]">
-                  {sides.map(({ team: sideTeam, claim }, i) => (
-                    <Fragment key={sideTeam}>
-                      {i === 1 ? (
-                        <span className="mx-auto flex h-8 w-8 items-center justify-center self-center rounded-full bg-orange-100 text-xs font-semibold text-orange-800">
-                          vs
-                        </span>
-                      ) : null}
-                      <div className="rounded-xl bg-gray-50 p-4">
-                        <TeamTag team={sideTeam} />
-                        <p className="mt-2.5 text-sm leading-relaxed text-gray-800">
-                          {claim?.text ?? "Claim not found."}
-                        </p>
-                        {claim ? (
-                          <div className="mt-3">
-                            <SourceBadge
-                              sourceIds={claim.sourceIds}
-                              contradictsSourceId={claim.contradictsSourceId}
-                            />
-                          </div>
-                        ) : null}
-                      </div>
-                    </Fragment>
-                  ))}
-                </div>
-
-                <p className="mt-5 text-sm leading-relaxed text-gray-700">{x.explanation}</p>
-
-                {x.suggestedQuestions.length > 0 ? (
-                  <div className="mt-3">
-                    <h3 className="text-xs font-semibold text-gray-900">Questions to ask next</h3>
-                    <ul className="mt-1 list-disc space-y-0.5 pl-5 text-sm text-gray-700">
-                      {x.suggestedQuestions.map((q) => (
-                        <li key={q}>{q}</li>
-                      ))}
-                    </ul>
-                  </div>
-                ) : null}
-              </li>
-            );
-          })}
-        </ul>
-      )}
+      <ConflictsExplorer
+        seedConflicts={seedConflicts}
+        imported={imported}
+        featureOptions={featureOptions}
+        initialFeatureId={initialFeatureId}
+        initialTeam={initialTeam}
+      />
     </main>
   );
 }
