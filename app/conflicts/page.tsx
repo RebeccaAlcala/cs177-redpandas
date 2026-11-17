@@ -5,7 +5,9 @@ import {
   ConflictsExplorer,
   type SeedConflictView,
 } from "@/components/ui/ConflictsExplorer";
+import { FeaturePromo } from "@/components/landing/FeaturePromo";
 import { isDemoImported } from "@/lib/demo";
+import { getSessionUser } from "@/lib/auth";
 
 // /conflicts: an interactive conflict list. Conflicts from the user's own
 // recordings sit on top of the sample backlog (opt-in via "Import meeting data").
@@ -13,6 +15,22 @@ import { isDemoImported } from "@/lib/demo";
 // surface, and each one can be dismissed as a false positive ("Not a conflict").
 // Supports ?feature=f_data_export and ?team=risk as the initial filter.
 export default async function ConflictsPage({ searchParams }: PageProps<"/conflicts">) {
+  const user = await getSessionUser();
+  if (!user) {
+    return (
+      <FeaturePromo
+        eyebrow="Conflicts"
+        title="Catch cross-team conflict before it ships."
+        blurb="The AI flags where teams contradict each other — a number, a policy, a commitment — and shows the evidence on both sides. You choose how sensitive it is, and dismiss anything that isn't a real disagreement."
+        points={[
+          { title: "Both sides, with evidence", text: "Each conflict shows what each team said and the source behind it." },
+          { title: "Tune the sensitivity", text: "From only the clearest conflicts to every borderline one — your call." },
+          { title: "Dismiss false positives", text: "Mark anything that isn't a real conflict, and it stays out of the way." },
+        ]}
+      />
+    );
+  }
+
   const sp = await searchParams;
   const initialFeatureId = typeof sp.feature === "string" ? sp.feature : "";
   const initialTeam = typeof sp.team === "string" ? sp.team : "";

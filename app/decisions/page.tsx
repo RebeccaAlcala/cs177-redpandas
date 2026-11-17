@@ -6,7 +6,9 @@ import { TeamTag } from "@/components/ui/TeamTag";
 import { SourceBadge, FreshnessTag } from "@/components/source";
 import { formatMeetingDate } from "@/components/transcript/format";
 import { ImportDemoBar } from "@/components/ui/ImportDemoBar";
+import { FeaturePromo } from "@/components/landing/FeaturePromo";
 import { isDemoImported } from "@/lib/demo";
+import { getSessionUser } from "@/lib/auth";
 import { FilterPill } from "./FilterPill";
 import { decisionFreshness } from "./freshness";
 
@@ -14,6 +16,22 @@ import { decisionFreshness } from "./freshness";
 // "Import meeting data" — a live recording produces no decisions of its own.
 // Supports ?feature=f_data_export and ?status=overturned.
 export default async function DecisionsPage({ searchParams }: PageProps<"/decisions">) {
+  const user = await getSessionUser();
+  if (!user) {
+    return (
+      <FeaturePromo
+        eyebrow="Decisions"
+        title="Every decision has a receipt."
+        blurb="A running log of what was decided on each feature, each one linked to the discussion and the source behind it — so you always know what still holds and what's been overturned."
+        points={[
+          { title: "Traced to the source", text: "Every decision links to the meeting, message, or doc it came from." },
+          { title: "Still current, or not", text: "Decisions are labeled current, updated, or overturned as things change." },
+          { title: "Grouped by feature", text: "See the decision history for a feature at a glance, newest first." },
+        ]}
+      />
+    );
+  }
+
   const sp = await searchParams;
   const featureId = typeof sp.feature === "string" ? sp.feature : "";
   const overturnedOnly = sp.status === "overturned";
