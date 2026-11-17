@@ -34,9 +34,28 @@ function getRecognitionCtor(): RecognitionCtor | null {
   return w.SpeechRecognition ?? w.webkitSpeechRecognition ?? null;
 }
 
+// One line of the transcript, shown as a chat bubble.
+interface Line {
+  id: string;
+  text: string;
+  at: string; // clock time label
+}
+
+function clock(): string {
+  return new Date().toLocaleTimeString([], { hour: "2-digit", minute: "2-digit", second: "2-digit" });
+}
+
+let lineSeq = 0;
+function makeLine(text: string): Line {
+  lineSeq += 1;
+  return { id: `l_${Date.now()}_${lineSeq}`, text: text.trim(), at: clock() };
+}
+
 export default function RecordPage() {
   const [title, setTitle] = useState("");
-  const [transcript, setTranscript] = useState("");
+  const [lines, setLines] = useState<Line[]>([]);
+  const [interim, setInterim] = useState("");
+  const [composer, setComposer] = useState("");
   const [recording, setRecording] = useState(false);
   const [supported, setSupported] = useState(false);
   const [loading, setLoading] = useState(false);
@@ -46,7 +65,7 @@ export default function RecordPage() {
 
   const recognitionRef = useRef<Recognition | null>(null);
   const recordingRef = useRef(false);
-  const baseRef = useRef(""); // finalized transcript text, without interim words
+  const feedRef = useRef<HTMLDivElement | null>(null);
 
   useEffect(() => {
     setSupported(getRecognitionCtor() !== null);
@@ -56,31 +75,48 @@ export default function RecordPage() {
     };
   }, []);
 
+  // Keep the chat feed scrolled to the latest line.
+  useEffect(() => {
+    feedRef.current?.scrollTo({ top: feedRef.current.scrollHeight });
+  }, [lines, interim]);
+
+  function addLines(text: string) {
+    const parts = text
+      .split(/\n+/)
+      .map((p) => p.trim())
+      .filter(Boolean);
+    if (parts.length === 0) return;
+    setLines((prev) => [...prev, ...parts.map(makeLine)]);
+  }
+
   function startRecording() {
     const Ctor = getRecognitionCtor();
     if (!Ctor) return;
     setError(null);
-    baseRef.current = transcript ? transcript.trimEnd() + " " : "";
 
     const rec = new Ctor();
     rec.continuous = true;
     rec.interimResults = true;
     rec.lang = "en-US";
     rec.onresult = (e: SpeechEvent) => {
-      let interim = "";
+      let interimText = "";
       for (let i = e.resultIndex; i < e.results.length; i++) {
         const r = e.results[i];
-        if (r.isFinal) baseRef.current += r[0].transcript + " ";
-        else interim += r[0].transcript;
+        if (r.isFinal) {
+          const finalText = r[0].transcript.trim();
+          if (finalText) setLines((prev) => [...prev, makeLine(finalText)]);
+        } else {
+          interimText += r[0].transcript;
+        }
       }
-      setTranscript(baseRef.current + interim);
+      setInterim(interimText);
     };
     rec.onerror = (e) => {
       if (e.error !== "no-speech" && e.error !== "aborted") {
         setError(`Microphone error: ${e.error}`);
       }
     };
-    // Chrome ends the session on a pause; restart while the user is still recording.
+    // Chrome ends the session on a pause; restart while still recording.
     rec.onend = () => {
       if (recordingRef.current) {
         try {
@@ -88,6 +124,8 @@ export default function RecordPage() {
         } catch {
           /* already starting */
         }
+      } else {
+        setInterim("");
       }
     };
 
@@ -101,6 +139,19 @@ export default function RecordPage() {
     recordingRef.current = false;
     setRecording(false);
     recognitionRef.current?.stop();
+    setInterim("");
+  }
+
+  function removeLine(id: string) {
+    setLines((prev) => prev.filter((l) => l.id !== id));
+  }
+
+  function clearAll() {
+    setLines([]);
+    setInterim("");
+    setAnalysis(null);
+    setSavedId(null);
+    setError(null);
   }
 
   async function analyze() {
@@ -108,8 +159,10 @@ export default function RecordPage() {
     setAnalysis(null);
     setSavedId(null);
     if (recording) stopRecording();
+
+    const transcript = lines.map((l) => l.text).join("\n");
     if (transcript.trim().length < 20) {
-      setError("Record or paste a bit more before summarizing.");
+      setError("Record or add a bit more before summarizing.");
       return;
     }
     setLoading(true);
@@ -124,7 +177,6 @@ export default function RecordPage() {
         throw new Error(data.error ?? "Something went wrong.");
       }
       setAnalysis(data.analysis);
-      // Auto-save to the browser.
       const id = newMeetingId();
       saveMeeting({
         id,
@@ -140,6 +192,8 @@ export default function RecordPage() {
       setLoading(false);
     }
   }
+
+  const empty = lines.length === 0 && !interim;
 
   return (
     <main className="mx-auto max-w-3xl px-6 py-12">
@@ -173,31 +227,87 @@ export default function RecordPage() {
         <Button variant="secondary" onClick={analyze} disabled={loading}>
           {loading ? "Summarizing…" : "Summarize with AI"}
         </Button>
+        {lines.length > 0 ? (
+          <button
+            onClick={clearAll}
+            className="text-sm text-gray-400 hover:text-red-600"
+          >
+            Clear
+          </button>
+        ) : null}
       </div>
 
-      {!supported ? (
-        <p className="mt-3 text-sm text-gray-500">
-          Live mic transcription needs Chrome or Edge. In other browsers, type or
-          paste a transcript below and hit <strong>Summarize with AI</strong>.
-        </p>
-      ) : (
-        <p className="mt-3 text-sm text-gray-500">
-          Click <strong>Start recording</strong> and talk — your words appear
-          below. You can also edit or paste a transcript before summarizing.
-        </p>
-      )}
+      <p className="mt-3 text-sm text-gray-500">
+        {supported
+          ? "Click Start recording and talk — each thing said appears as a chat bubble below. "
+          : "Live mic transcription needs Chrome or Edge. "}
+        You can also type or paste lines using the box under the transcript.
+      </p>
 
-      <textarea
-        value={transcript}
-        onChange={(e) => {
-          setTranscript(e.target.value);
-          baseRef.current = e.target.value;
+      {/* Chat-style transcript feed */}
+      <div
+        ref={feedRef}
+        className="mt-4 flex h-80 flex-col gap-2 overflow-y-auto rounded-xl border border-gray-300 bg-gray-50/60 p-4"
+      >
+        {empty ? (
+          <p className="m-auto text-sm text-gray-400">
+            Your transcript will appear here, one message per line.
+          </p>
+        ) : (
+          <>
+            {lines.map((l) => (
+              <div key={l.id} className="group flex flex-col items-start">
+                <div className="flex max-w-[85%] items-end gap-2">
+                  <div className="rounded-2xl rounded-bl-sm border border-gray-200 bg-white px-3.5 py-2 text-sm text-gray-800 shadow-sm">
+                    {l.text}
+                  </div>
+                  <button
+                    onClick={() => removeLine(l.id)}
+                    className="opacity-0 transition-opacity group-hover:opacity-100 text-xs text-gray-400 hover:text-red-600"
+                    aria-label="Delete line"
+                  >
+                    ✕
+                  </button>
+                </div>
+                <span className="mt-0.5 pl-1 text-[11px] text-gray-400">{l.at}</span>
+              </div>
+            ))}
+            {interim ? (
+              <div className="max-w-[85%] rounded-2xl rounded-bl-sm border border-dashed border-gray-300 bg-white/70 px-3.5 py-2 text-sm italic text-gray-500">
+                {interim}
+              </div>
+            ) : null}
+          </>
+        )}
+      </div>
+
+      {/* Add a line manually / paste */}
+      <form
+        onSubmit={(e) => {
+          e.preventDefault();
+          addLines(composer);
+          setComposer("");
         }}
-        readOnly={recording}
-        rows={10}
-        placeholder="Transcript will appear here as you speak, or paste one in…"
-        className="mt-4 w-full resize-y rounded-xl border border-gray-300 bg-white px-4 py-3 text-sm leading-relaxed text-gray-900 outline-none focus:border-accent"
-      />
+        className="mt-3 flex items-start gap-2"
+      >
+        <textarea
+          value={composer}
+          onChange={(e) => setComposer(e.target.value)}
+          onKeyDown={(e) => {
+            if (e.key === "Enter" && !e.shiftKey) {
+              e.preventDefault();
+              addLines(composer);
+              setComposer("");
+            }
+          }}
+          rows={1}
+          placeholder="Type a line and press Enter, or paste a transcript…"
+          className="min-h-[42px] flex-1 resize-y rounded-lg border border-gray-300 bg-white px-3 py-2 text-sm text-gray-900 outline-none focus:border-accent"
+        />
+        <Button type="submit" variant="secondary">
+          Add
+        </Button>
+      </form>
 
       {error ? (
         <div className="mt-4 rounded-lg border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-700">
