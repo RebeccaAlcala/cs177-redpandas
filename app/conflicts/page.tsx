@@ -77,6 +77,15 @@ export default async function ConflictsPage({ searchParams }: PageProps<"/confli
 
       <ImportDemoBar imported={imported} />
 
+      <div className="mb-4 flex items-start gap-2 rounded-lg border border-gray-200 bg-gray-50 px-4 py-3 text-sm text-gray-600">
+        <span aria-hidden>💡</span>
+        <p>
+          Use <span className="font-medium text-gray-900">Conflict sensitivity</span> to choose how
+          many to surface, and mark anything that isn&apos;t a real disagreement as{" "}
+          <span className="font-medium text-gray-900">“Not a conflict.”</span>
+        </p>
+      </div>
+
       <ConflictsExplorer
         seedConflicts={seedConflicts}
         imported={imported}

@@ -206,6 +206,15 @@ export default function RecordPage() {
         </Link>
       </div>
 
+      <div className="mb-6 flex items-start gap-2 rounded-lg border border-gray-200 bg-gray-50 px-4 py-3 text-sm text-gray-600">
+        <span aria-hidden>💡</span>
+        <p>
+          Start recording (or paste a transcript below), then{" "}
+          <span className="font-medium text-gray-900">Summarize with AI</span> to get the
+          summary, action items, conflicts, and unsourced-claim flags.
+        </p>
+      </div>
+
       <input
         value={title}
         onChange={(e) => setTitle(e.target.value)}
