@@ -9,6 +9,10 @@ export interface LiveConflict {
   explanation: string;
   quoteA?: string;
   quoteB?: string;
+  // How confident the AI is that this is a real, substantive conflict (0..1).
+  // Used by the conflict-sensitivity control to filter borderline / likely
+  // false-positive flags. Older recordings may not have it.
+  significance?: number;
 }
 
 export interface LiveAnalysis {

@@ -16,6 +16,11 @@ From a raw transcript you extract:
 - conflicts: places where two people or teams disagree or define the same term
   differently. Give a short title, the two sides (teamA/teamB as names or teams),
   a one-sentence explanation, and a short quote from each side when available.
+  Also give a "significance" from 0.0 to 1.0 for how confident you are this is a
+  real, substantive cross-team conflict: 1.0 = an explicit, direct contradiction
+  on a concrete point (a number, a policy, a commitment); ~0.5 = a soft or possible
+  disagreement; below 0.4 = likely just different emphasis or wording rather than a
+  true conflict. Use the full range so a reader can filter by it.
 - unsourcedClaims: statements asserted as fact with no evidence, source, data, or
   document behind them. Say briefly why it is unsupported.
 - confusions: terms or points left ambiguous or that different people seem to
@@ -29,7 +34,7 @@ Respond with ONLY a JSON object, no prose and no code fences, in exactly this sh
 {
   "summaryPoints": ["..."],
   "actionItems": [{ "text": "...", "owner": "optional name" }],
-  "conflicts": [{ "title": "...", "teamA": "...", "teamB": "...", "explanation": "...", "quoteA": "...", "quoteB": "..." }],
+  "conflicts": [{ "title": "...", "teamA": "...", "teamB": "...", "explanation": "...", "quoteA": "...", "quoteB": "...", "significance": 0.0 }],
   "unsourcedClaims": [{ "text": "...", "why": "..." }],
   "confusions": [{ "text": "...", "term": "optional term" }]
 }`;
@@ -61,6 +66,13 @@ function optStr(v: unknown): string | undefined {
   return typeof v === "string" && v.trim() ? v : undefined;
 }
 
+// Clamp a model-provided number to 0..1; fall back when missing/malformed.
+function num01(v: unknown, fallback: number): number {
+  const n = typeof v === "number" ? v : typeof v === "string" ? Number(v) : NaN;
+  if (!Number.isFinite(n)) return fallback;
+  return Math.min(1, Math.max(0, n));
+}
+
 // Coerce the model's object into LiveAnalysis, dropping anything malformed so a
 // bad field can never crash the page.
 function coerce(raw: unknown): LiveAnalysis {
@@ -84,6 +96,7 @@ function coerce(raw: unknown): LiveAnalysis {
           explanation: str(it.explanation),
           quoteA: optStr(it.quoteA),
           quoteB: optStr(it.quoteB),
+          significance: num01(it.significance, 0.7),
         };
       })
       .filter((c) => c.title.trim().length > 0),
