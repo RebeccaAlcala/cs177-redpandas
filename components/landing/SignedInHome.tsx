@@ -3,6 +3,7 @@ import { Button } from "@/components/ui/Button";
 import { DotField } from "@/components/ui/DotField";
 import { ImportDemoBar } from "@/components/ui/ImportDemoBar";
 import { RecordedMeetings } from "@/components/ui/RecordedMeetings";
+import { OnboardingTour, TourButton } from "@/components/ui/OnboardingTour";
 import type { SessionUser } from "@/lib/auth";
 
 // Signed-in home ("/"). Distinct from the logged-out marketing page: a working
@@ -42,6 +43,8 @@ export function SignedInHome({
 
   return (
     <main className="mx-auto max-w-6xl px-6 py-8">
+      <OnboardingTour />
+
       {/* Welcome hero */}
       <section className="relative overflow-hidden rounded-[2rem] bg-deep px-6 py-12 text-white sm:px-10 sm:py-16">
         <DotField className="text-emerald-200/70 [mask-image:linear-gradient(to_bottom,black,transparent_80%)]" />
@@ -61,6 +64,7 @@ export function SignedInHome({
             <Button href="/my-meetings" variant="ghost">
               My meetings
             </Button>
+            <TourButton className="text-sm font-medium text-white/80 underline-offset-4 hover:text-white hover:underline" />
           </div>
         </div>
       </section>
