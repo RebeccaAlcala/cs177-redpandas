@@ -5,7 +5,7 @@
 //
 // Uses plain fetch against the Messages API, mirroring lib/ai/generate.ts.
 
-import type { LiveAnalysis } from "./analysis-types";
+import type { LiveAnalysis, PriorMeetingContext } from "./analysis-types";
 
 const DEFAULT_MODEL = "claude-sonnet-5-5";
 
@@ -26,21 +26,45 @@ From a raw transcript you extract:
 - confusions: terms or points left ambiguous or that different people seem to
   mean differently.
 
+You may also be given PRIOR MEETINGS as context. When you are, detect conflicts
+BOTH within the new transcript AND between the new transcript and those prior
+meetings. When a conflict is between the new meeting and an earlier one, set
+"sourceMeeting" to that prior meeting's EXACT title, put the NEW statement in
+quoteA and the EARLIER statement in quoteB, and name the sides in teamA/teamB.
+Only use a title that actually appears in the prior meetings, and only when there
+is a genuine contradiction. For conflicts contained within the new transcript,
+leave "sourceMeeting" out.
+
 Only report conflicts and unsourced claims that are genuinely present. If a
 category has nothing, return an empty array for it. Do not invent content that is
-not supported by the transcript.
+not supported by the transcript or the prior meetings.
 
 Respond with ONLY a JSON object, no prose and no code fences, in exactly this shape:
 {
   "summaryPoints": ["..."],
   "actionItems": [{ "text": "...", "owner": "optional name" }],
-  "conflicts": [{ "title": "...", "teamA": "...", "teamB": "...", "explanation": "...", "quoteA": "...", "quoteB": "...", "significance": 0.0 }],
+  "conflicts": [{ "title": "...", "teamA": "...", "teamB": "...", "explanation": "...", "quoteA": "...", "quoteB": "...", "significance": 0.0, "sourceMeeting": "optional exact prior meeting title" }],
   "unsourcedClaims": [{ "text": "...", "why": "..." }],
   "confusions": [{ "text": "...", "term": "optional term" }]
 }`;
 
-function buildUserPrompt(transcript: string, title: string): string {
-  return `Meeting title: ${title || "Untitled meeting"}\n\nTranscript:\n"""\n${transcript.trim()}\n"""\n\nReturn the JSON object now.`;
+// Build a compact context block from prior meetings. Transcripts are truncated
+// so the prompt stays within budget even with several meetings.
+function buildPriorBlock(prior: PriorMeetingContext[]): string {
+  if (prior.length === 0) return "";
+  const blocks = prior.slice(0, 8).map((m) => {
+    const points = m.summaryPoints.length
+      ? m.summaryPoints.map((p) => `- ${p}`).join("\n")
+      : "- (no summary)";
+    const excerpt = (m.transcript ?? "").trim().slice(0, 1200);
+    const transcriptPart = excerpt ? `\nTranscript excerpt:\n"""\n${excerpt}\n"""` : "";
+    return `### ${m.title}\nSummary:\n${points}${transcriptPart}`;
+  });
+  return `PRIOR MEETINGS (earlier context — use these to catch contradictions with the new meeting):\n\n${blocks.join("\n\n")}\n\n`;
+}
+
+function buildUserPrompt(transcript: string, title: string, prior: PriorMeetingContext[]): string {
+  return `${buildPriorBlock(prior)}NEW MEETING\nMeeting title: ${title || "Untitled meeting"}\n\nTranscript:\n"""\n${transcript.trim()}\n"""\n\nReturn the JSON object now.`;
 }
 
 // Tolerate a stray code fence or sentence around the JSON.
@@ -97,6 +121,7 @@ function coerce(raw: unknown): LiveAnalysis {
           quoteA: optStr(it.quoteA),
           quoteB: optStr(it.quoteB),
           significance: num01(it.significance, 0.7),
+          sourceMeeting: optStr(it.sourceMeeting),
         };
       })
       .filter((c) => c.title.trim().length > 0),
@@ -119,6 +144,7 @@ export async function analyzeTranscript(
   transcript: string,
   title: string,
   apiKey: string,
+  prior: PriorMeetingContext[] = [],
 ): Promise<LiveAnalysis> {
   const base = process.env.ANTHROPIC_BASE_URL ?? "https://api.anthropic.com";
   const model = process.env.ANTHROPIC_MODEL ?? DEFAULT_MODEL;
@@ -134,7 +160,7 @@ export async function analyzeTranscript(
       model,
       max_tokens: 4096,
       system: SYSTEM_PROMPT,
-      messages: [{ role: "user", content: buildUserPrompt(transcript, title) }],
+      messages: [{ role: "user", content: buildUserPrompt(transcript, title, prior) }],
     }),
   });
 

@@ -13,6 +13,18 @@ export interface LiveConflict {
   // Used by the conflict-sensitivity control to filter borderline / likely
   // false-positive flags. Older recordings may not have it.
   significance?: number;
+  // When this conflict contradicts an EARLIER meeting, the exact title of that
+  // prior meeting (the "source" of the earlier claim). Empty for conflicts
+  // contained within the current transcript.
+  sourceMeeting?: string;
+}
+
+// Compact context about an earlier recorded meeting, passed to the analyzer so
+// it can catch contradictions across meetings and cite the source.
+export interface PriorMeetingContext {
+  title: string;
+  summaryPoints: string[];
+  transcript?: string;
 }
 
 export interface LiveAnalysis {
